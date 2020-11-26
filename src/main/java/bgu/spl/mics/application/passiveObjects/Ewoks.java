@@ -1,5 +1,6 @@
 package bgu.spl.mics.application.passiveObjects;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Passive object representing the resource manager.
