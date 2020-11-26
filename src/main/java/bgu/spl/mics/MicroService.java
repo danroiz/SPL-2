@@ -52,7 +52,9 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-    	
+    	MessageBus bus = new MessageBusImpl();
+    	bus.subscribeEvent(type,this);
+    	// store the callback
     }
 
     /**
@@ -92,8 +94,8 @@ public abstract class MicroService implements Runnable {
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
     protected final <T> Future<T> sendEvent(Event<T> e) {
-    	
-        return null; 
+        MessageBus bus = new MessageBusImpl();
+        return bus.sendEvent(e);
     }
 
     /**
@@ -147,7 +149,9 @@ public abstract class MicroService implements Runnable {
      */
     @Override
     public final void run() {
-    	
+    	// message = bus.awaitMessage
+        // search the right callback which is relevant to this message (maybe map with message type as a key)
+
     }
 
 }

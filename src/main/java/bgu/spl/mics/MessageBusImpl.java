@@ -1,4 +1,6 @@
 package bgu.spl.mics;
+import bgu.spl.mics.application.messages.TerminateBroadcast;
+
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -21,9 +23,10 @@ public class MessageBusImpl implements MessageBus {
 		
     }
 
-	@Override @SuppressWarnings("unchecked")
+	@Override
 	public <T> void complete(Event<T> e, T result) {
-		
+		// Future<T> future = map.get(e)
+		// future.resolve(result)
 	}
 
 	@Override
