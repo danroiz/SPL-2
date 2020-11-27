@@ -1,22 +1,22 @@
 package bgu.spl.mics;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.concurrent.TimeUnit;
-import static org.junit.Assert.*;
 
 
-public class FutureTest {
+class FutureTest {
     private Future<String> future;
 
-    @Before
+    @BeforeEach
     public void setUp(){
         future = new Future<>();
     }
 
+
     @Test
-    public void testGet()
-    {
+    void get() {
         // check pre condition
         assertFalse(future.isDone());
         //prepare
@@ -28,7 +28,7 @@ public class FutureTest {
     }
 
     @Test
-    public void testResolve(){
+    void resolve() {
         // prepare
         String str = "someResult";
         // act
@@ -39,7 +39,7 @@ public class FutureTest {
     }
 
     @Test
-    public void testIsDone(){
+    void isDone() {
         //prepare
         String str = "someResult";
         assertFalse(future.isDone()); // pre condition
@@ -51,8 +51,7 @@ public class FutureTest {
     }
 
     @Test
-    public void testGetWithTimeOut() throws InterruptedException
-    {
+    void testGet() {
         // check pre condition
         assertFalse(future.isDone());
         future.get(100, TimeUnit.MILLISECONDS);

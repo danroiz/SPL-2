@@ -1,21 +1,20 @@
 package bgu.spl.mics.application.passiveObjects;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class EwokTest {
+
+class EwokTest {
     private Ewok ewok;
     final int DEFAULT_ID = 0;
 
-    @Before
-    public void setUp() throws Exception {
-        ewok = new Ewok(DEFAULT_ID);
-    }
+    @BeforeEach
+    void setUp() { ewok = new Ewok(DEFAULT_ID); }
 
     @Test
-    public void acquire() {
+    void acquire() {
         // check pre condition
         assertTrue(ewok.available);
         // act
@@ -25,7 +24,7 @@ public class EwokTest {
     }
 
     @Test
-    public void release() {
+    void release() {
         // prepare
         ewok.available = false;
         // act

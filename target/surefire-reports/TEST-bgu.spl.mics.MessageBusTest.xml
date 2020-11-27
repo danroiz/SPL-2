@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="bgu.spl.mics.MessageBusTest" time="0.023" tests="3" errors="0" skipped="0" failures="3">
+  <properties>
+    <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="sun.cpu.isalist" value=""/>
+    <property name="sun.jnu.encoding" value="UTF-8"/>
+    <property name="java.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/test-classes:/users/studs/bsc/2021/dorei/SPL-2/target/classes:/users/studs/bsc/2021/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="user.timezone" value=""/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="os.name" value="Linux"/>
+    <property name="user.country" value="IL"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.boot.library.path" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/amd64"/>
+    <property name="sun.java.command" value="/users/studs/bsc/2021/dorei/SPL-2/target/surefire/surefirebooter6735976867816519782.jar /users/studs/bsc/2021/dorei/SPL-2/target/surefire 2020-11-27T16-48-53_355-jvmRun1 surefire8016449310574375228tmp surefire_04903387092956732386tmp"/>
+    <property name="surefire.test.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/test-classes:/users/studs/bsc/2021/dorei/SPL-2/target/classes:/users/studs/bsc/2021/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="user.home" value="/users/studs/bsc/2021/dorei"/>
+    <property name="user.language" value="en"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.home" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre"/>
+    <property name="basedir" value="/users/studs/bsc/2021/dorei/SPL-2"/>
+    <property name="file.separator" value="/"/>
+    <property name="line.separator" value="&#10;"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
+    <property name="surefire.real.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/surefire/surefirebooter6735976867816519782.jar"/>
+    <property name="sun.boot.class.path" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/resources.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/rt.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/sunrsasign.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jsse.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jce.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/charsets.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jfr.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/classes"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="java.runtime.version" value="1.8.0_65-b17"/>
+    <property name="user.name" value="dorei@wincs.cs.bgu.ac.il"/>
+    <property name="path.separator" value=":"/>
+    <property name="os.version" value="4.15.0-76-generic"/>
+    <property name="java.endorsed.dirs" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/endorsed"/>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="localRepository" value="/users/studs/bsc/2021/dorei/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.io.tmpdir" value="/tmp"/>
+    <property name="java.version" value="1.8.0_65"/>
+    <property name="user.dir" value="/users/studs/bsc/2021/dorei/SPL-2"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
+    <property name="sun.os.patch.level" value="unknown"/>
+    <property name="java.library.path" value="/usr/lib:/usr/X11R6/lib:/usr/share/lib:/usr/openwin/lib:/usr/local/lib/X11:/usr/dt/lib/:/usr/local/lib:/usr/ucb/lib:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="java.vm.version" value="25.65-b01"/>
+    <property name="java.ext.dirs" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="java.class.version" value="52.0"/>
+  </properties>
+  <testcase name="sendBroadcast" classname="bgu.spl.mics.MessageBusTest" time="0.017">
+    <failure message="expected: &lt;bgu.spl.mics.application.messages.TerminateBroadcast@436e852b&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: <bgu.spl.mics.application.messages.TerminateBroadcast@436e852b> but was: <null>
+	at bgu.spl.mics.MessageBusTest.sendBroadcast(MessageBusTest.java:48)
+]]></failure>
+  </testcase>
+  <testcase name="complete" classname="bgu.spl.mics.MessageBusTest" time="0">
+    <failure type="org.opentest4j.AssertionFailedError:">org.opentest4j.AssertionFailedError: 
+	at bgu.spl.mics.MessageBusTest.complete(MessageBusTest.java:35)
+</failure>
+  </testcase>
+  <testcase name="sendEvent" classname="bgu.spl.mics.MessageBusTest" time="0.001">
+    <failure message="expected: &lt;bgu.spl.mics.application.messages.AttackEvent@e720b71&gt; but was: &lt;null&gt;" type="org.opentest4j.AssertionFailedError"><![CDATA[org.opentest4j.AssertionFailedError: expected: <bgu.spl.mics.application.messages.AttackEvent@e720b71> but was: <null>
+	at bgu.spl.mics.MessageBusTest.sendEvent(MessageBusTest.java:61)
+]]></failure>
+  </testcase>
+</testsuite>
