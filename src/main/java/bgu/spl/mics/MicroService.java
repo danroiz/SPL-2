@@ -1,4 +1,5 @@
 package bgu.spl.mics;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -20,14 +21,20 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>
  */
 public abstract class MicroService implements Runnable { 
-    
+    private String name;
+    private MessageBus messageBus;
+    private boolean terminated;
+    private HashMap<Class<? extends Message>, Callback<? extends Message>> messageToCallbackMap;
 
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
      *             does not have to be unique)
      */
     public MicroService(String name) {
-    	
+    	this.name = name;
+    	messageBus = MessageBusImpl.getInstance();
+    	terminated = false;
+    	messageToCallbackMap = new HashMap<>();
     }
 
     /**
@@ -52,9 +59,8 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-    	MessageBus bus = new MessageBusImpl();
-    	bus.subscribeEvent(type,this);
-    	// store the callback
+        messageBus.subscribeEvent(type, this);
+        messageToCallbackMap.put(type,callback);
     }
 
     /**
@@ -78,7 +84,8 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-    	
+        messageBus.subscribeBroadcast(type, this);
+        messageToCallbackMap.put(type,callback);
     }
 
     /**
@@ -94,8 +101,7 @@ public abstract class MicroService implements Runnable {
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
     protected final <T> Future<T> sendEvent(Event<T> e) {
-        MessageBus bus = new MessageBusImpl();
-        return bus.sendEvent(e);
+        return messageBus.sendEvent(e);
     }
 
     /**
@@ -105,7 +111,7 @@ public abstract class MicroService implements Runnable {
      * @param b The broadcast message to send
      */
     protected final void sendBroadcast(Broadcast b) {
-    	
+    	messageBus.sendBroadcast(b);
     }
 
     /**
@@ -119,7 +125,7 @@ public abstract class MicroService implements Runnable {
      *               {@code e}.
      */
     protected final <T> void complete(Event<T> e, T result) {
-    	
+    	messageBus.complete(e,result);
     }
 
     /**
@@ -132,7 +138,7 @@ public abstract class MicroService implements Runnable {
      * message.
      */
     protected final void terminate() {
-    	
+        terminated = true;
     }
 
     /**
@@ -140,7 +146,7 @@ public abstract class MicroService implements Runnable {
      *         construction time and is used mainly for debugging purposes.
      */
     public final String getName() {
-        return null;
+        return name;
     }
 
     /**
@@ -149,6 +155,19 @@ public abstract class MicroService implements Runnable {
      */
     @Override
     public final void run() {
+        messageBus.register(this);
+        initialize();
+        while (!terminated){
+            try {
+                    Message nextMessage = messageBus.awaitMessage(this);
+                    Callback<Message> callback = (Callback<Message>) messageToCallbackMap.get(nextMessage.getClass());
+                    callback.call(nextMessage);
+            }
+            catch (InterruptedException e)
+            {
+                System.out.println("Miss Chang");
+            }
+        }
     	// message = bus.awaitMessage
         // search the right callback which is relevant to this message (maybe map with message type as a key)
 
