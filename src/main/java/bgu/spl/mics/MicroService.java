@@ -158,16 +158,19 @@ public abstract class MicroService implements Runnable {
         messageBus.register(this);
         initialize();
         while (!terminated){
-            try {
+                try {
                     Message nextMessage = messageBus.awaitMessage(this);
                     Callback<Message> callback = (Callback<Message>) messageToCallbackMap.get(nextMessage.getClass());
                     callback.call(nextMessage);
-            }
+                }
             catch (InterruptedException e)
             {
                 System.out.println("Miss Chang");
             }
         }
+
+        messageBus.unregister(this);
+        //add to diary
     	// message = bus.awaitMessage
         // search the right callback which is relevant to this message (maybe map with message type as a key)
 

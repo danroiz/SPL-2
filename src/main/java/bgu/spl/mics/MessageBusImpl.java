@@ -4,6 +4,7 @@ import bgu.spl.mics.application.messages.TerminateBroadcast;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -16,15 +17,22 @@ public class MessageBusImpl implements MessageBus {
 	private ConcurrentHashMap<Event<?>, Future> eventToFutureMap; // Each event has a specific Future object related to him.
 
 	// TO DO: CONSIDER CHANGING TO BLOCKING QUEUE
-	private ConcurrentHashMap<MicroService,ConcurrentLinkedQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
+	private ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
 
 	private ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
 	private ConcurrentHashMap<Class<? extends Broadcast>, ConcurrentLinkedQueue<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
 
-	private ConcurrentHashMap<MicroService, ConcurrentLinkedQueue<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
-	private ConcurrentHashMap<MicroService, ConcurrentLinkedQueue<Class<? extends Broadcast>>> microServiceToBroadcast; // given a micro-service, get all the types of broadcasts it registered to.
+	// TO DO: Change it to Vector
+	private ConcurrentHashMap<MicroService, Vector<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
+	private ConcurrentHashMap<MicroService, Vector<Class<? extends Broadcast>>> microServiceToBroadcast; // given a micro-service, get all the types of broadcasts it registered to.
 
-	private static MessageBusImpl messageBus = null;
+	private static class MessageBusHolder {
+		private static MessageBusImpl instance = new MessageBusImpl();
+	}
+
+	public static MessageBusImpl getInstance(){
+		return MessageBusHolder.instance;
+	}
 
 	private MessageBusImpl(){
 		eventToFutureMap = new ConcurrentHashMap<>();
@@ -35,11 +43,6 @@ public class MessageBusImpl implements MessageBus {
 		microServiceToBroadcast = new ConcurrentHashMap<>();
 	}
 
-	public static MessageBusImpl getInstance(){
-		if (messageBus == null)
-			messageBus = new MessageBusImpl();
-		return messageBus;
-	}
 
 
 	@Override
@@ -94,7 +97,10 @@ public class MessageBusImpl implements MessageBus {
 			synchronized (subscribersQueue) { // first thread to get to round-robin queue, no other thread will mess with that queue until he finish
 				MicroService ms = subscribersQueue.poll(); // get next micro-service in the queue (by round-robin)
 				if (ms != null) { // there's a subscriber in the queue @INV: subscribersQueue never empty
-					microServiceToMsgQueueMap.get(ms).add(e); // add that event the proper micro-service message queue
+					boolean successAdd = microServiceToMsgQueueMap.get(ms).offer(e); // add that event the proper micro-service message queue
+					if (!successAdd){
+						System.out.println("WTF WHY FAILED TO ADD EVENT: " + e + " TO MICROSERVICE:" + ms);
+					}
 					subscribersQueue.add(ms); // add back the micro-service to the subscriber-queue (by round-robin)
 					future = new Future<T>();
 					eventToFutureMap.put(e, future);
@@ -107,22 +113,22 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void register(MicroService m) {
 		// check if already registered
-		microServiceToEvent.putIfAbsent(m,new ConcurrentLinkedQueue<>());
-		microServiceToBroadcast.putIfAbsent(m,new ConcurrentLinkedQueue<>());
-		microServiceToMsgQueueMap.putIfAbsent(m,new ConcurrentLinkedQueue<>());
+		microServiceToEvent.putIfAbsent(m,new Vector<>());
+		microServiceToBroadcast.putIfAbsent(m,new Vector<>());
+		microServiceToMsgQueueMap.putIfAbsent(m,new LinkedBlockingQueue<>());
 	}
 
 	@Override
-	public void unregister(MicroService m) {
+	public void unregister(MicroService m) { // TO DO: might need to be synchronized
 		// delete m from round robin queue and from broadcast map
 		// if after unregister the queue of subscribers for some type of event is empty --> delete the queue
 
-		ConcurrentLinkedQueue<Class<? extends Event>> queueEvents = microServiceToEvent.get(m);
-		ConcurrentLinkedQueue<Class<? extends Broadcast>> queueBroadcasts = microServiceToBroadcast.get(m);
-		for (Class<? extends Event> element: queueEvents)
-			eventToMicroServicesQueueMap.get(element).remove(m);
-		for (Class<? extends Broadcast> element: queueBroadcasts)
-			broadcastToMicroServiceQueueMap.get(element).remove(m);
+		Vector<Class<? extends Event>> eventTypes  = microServiceToEvent.get(m);
+		Vector<Class<? extends Broadcast>> broadcastsTypes = microServiceToBroadcast.get(m);
+		for (Class<? extends Event> type: eventTypes )
+			eventToMicroServicesQueueMap.get(type).remove(m);
+		for (Class<? extends Broadcast> type: broadcastsTypes)
+			broadcastToMicroServiceQueueMap.get(type).remove(m);
 		microServiceToMsgQueueMap.remove(m); // what to do if m has messages in its queue and it unregistered itself?
 		microServiceToBroadcast.remove(m);
 		microServiceToEvent.remove(m);
@@ -131,6 +137,6 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public Message awaitMessage(MicroService m) throws InterruptedException {
 
-		return microServiceToMsgQueueMap.get(m).poll();
+		return microServiceToMsgQueueMap.get(m).take(); // blocking method until new message is received
 	}
 }
