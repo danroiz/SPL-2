@@ -1,6 +1,5 @@
 package bgu.spl.mics;
 import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The MicroService is an abstract class that any micro-service in the system
@@ -156,12 +155,13 @@ public abstract class MicroService implements Runnable {
     @Override
     public final void run() {
         messageBus.register(this);
-        initialize();
+        initialize(); //
         while (!terminated){
                 try {
                     Message nextMessage = messageBus.awaitMessage(this);
-                    Callback<Message> callback = (Callback<Message>) messageToCallbackMap.get(nextMessage.getClass());
-                    callback.call(nextMessage);
+                    Callback callback = messageToCallbackMap.get(nextMessage.getClass());
+                    callback.call(nextMessage); // what to do with message?
+
                 }
             catch (InterruptedException e)
             {
@@ -170,9 +170,7 @@ public abstract class MicroService implements Runnable {
         }
 
         messageBus.unregister(this);
-        //add to diary
-    	// message = bus.awaitMessage
-        // search the right callback which is relevant to this message (maybe map with message type as a key)
+        //add to diary termination time
 
     }
 
