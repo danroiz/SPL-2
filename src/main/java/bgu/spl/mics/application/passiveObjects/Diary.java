@@ -8,5 +8,22 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Do not add to this class nothing but a single constructor, getters and setters.
  */
 public class Diary {
+    public AtomicInteger totalAttacks = new AtomicInteger();
+    public long HanSoloFinish; // indicates when HanSolo finished all of his attacks
+    public long C3POFinish;
+    public long R2D2Deactivate;
+    public long LeiaTerminate;
+    public long HanSoloTerminate;
+    public long C3POTerminate;
+    public long R2D2Terminate;
+    public long LandoTerminate;
+    private static class DiaryHolder {
+        private static Diary instance = new Diary();
+    }
+
+    public static Diary getInstance(){
+        return DiaryHolder.instance;
+    }
+
 
 }

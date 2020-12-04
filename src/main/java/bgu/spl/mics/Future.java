@@ -18,7 +18,8 @@ public class Future<T> {
 	 * This should be the the only public constructor in this class.
 	 */
 	public Future() {
-		
+		result = null;
+		isDone = false;
 	}
 	
 	/**
@@ -29,23 +30,35 @@ public class Future<T> {
      * @return return the result of type T if it is available, if not wait until it is available.
      * 	       
      */
-	public T get() {
-		
-        return null; 
+	public synchronized T get() {
+		while (!isDone){
+			try{
+				wait();
+			} catch (InterruptedException e) {
+				System.out.println("Current Thread: " + Thread.currentThread().getName() + " was interrupted in future.get()");
+			}
+		}
+		return result;
 	}
 	
 	/**
      * Resolves the result of this Future object.
      */
-	public void resolve (T result) {
-		
+	public synchronized void resolve (T result) {
+		// debug purpose
+		if (isDone)
+			System.out.println("WTF future is already resolved. current thread: " + Thread.currentThread().getName());
+
+		this.result = result;
+		isDone = true;
+		notifyAll();
 	}
 	
 	/**
      * @return true if this object has been resolved, false otherwise
      */
-	public boolean isDone() {
-		return false;
+	public synchronized boolean isDone() {
+		return isDone;
 	}
 	
 	/**
@@ -59,9 +72,16 @@ public class Future<T> {
      * 	       wait for {@code timeout} TimeUnits {@code unit}. If time has
      *         elapsed, return null.
      */
-	public T get(long timeout, TimeUnit unit) {
-		
-        return null;
+	public synchronized T get(long timeout, TimeUnit unit) {
+		while (!isDone) {
+			try {
+				wait(unit.convert(timeout,unit));
+				return result;
+			} catch (InterruptedException e) {
+				System.out.println("thread " + Thread.currentThread().getName() +  " was interrupted");
+			}
+		}
+		return result;
 	}
 
 }

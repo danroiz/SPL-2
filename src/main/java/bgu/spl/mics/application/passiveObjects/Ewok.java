@@ -23,14 +23,23 @@ public class Ewok {
     /**
      * Acquires an Ewok
      */
-    public void acquire() {
+    public synchronized void acquire() {
+		while (!available){
+		    try{ wait();}
+		    catch (InterruptedException e) {
+                System.out.println("Thread: " + Thread.currentThread().getName() + " interupted");
+            }
+        }
 		available = false;
     }
 
     /**
      * release an Ewok
      */
-    public void release() {
+    public synchronized void release() {
+        if (available = true)
+            System.out.println("Thread: " + Thread.currentThread().getName() + " released an ewok " + this.serialNumber + " who was already released WTF" );
     	available = true;
+    	notifyAll();
     }
 }

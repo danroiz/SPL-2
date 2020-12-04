@@ -25,6 +25,12 @@ public class LeiaMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-    	
+    	/*
+    	// subscribe to all the shit
+    	// send all the attack events
+    	// for each future got from attack events, do future.get()
+    	// send deactivation event to R2D2
+    	//
+    	 */
     }
 }
