@@ -27,6 +27,7 @@ public class Main {
 //			System.out.println(inty);
 //		}
 //
+		Diary.getInstance();
  		CountDownLatch attackLatch = new CountDownLatch(2);
 		CountDownLatch deactivateLatch = new CountDownLatch(1);
 		CountDownLatch destroyLatch = new CountDownLatch(1);
@@ -38,20 +39,34 @@ public class Main {
 		MicroService R2D2 = new R2D2Microservice(deactivateLatch);
 		MicroService Lando = new LandoMicroservice(destroyLatch);
 		List<Thread> threadsList = new ArrayList<>();
-		threadsList.add(new Thread(Leia));
-		threadsList.add(new Thread(C3PO));
-		threadsList.add(new Thread(HanSolo));
-		threadsList.add(new Thread(R2D2));
-		threadsList.add(new Thread(Lando));
+		Thread liea_ = new Thread(Leia);
+		liea_.setName("Liea");
+		Thread C3PO_= new Thread(C3PO);
+		C3PO_.setName("C3PO");
+		Thread HanSolo_ = new Thread(HanSolo);
+		Thread R2D2_ = new Thread(R2D2);
+		Thread Lando_ = new Thread(Lando);
+		HanSolo_.setName("HanSolo");
+		R2D2_.setName("R2D2");
+		Lando_.setName("Lando");
+
+		threadsList.add(liea_);
+		threadsList.add(C3PO_);
+		threadsList.add(HanSolo_);
+		threadsList.add(R2D2_);
+		threadsList.add(Lando_);
+		System.out.println("---- STARTING THE PROGRAM ----");
 		for (Thread thread: threadsList) {
 			thread.start();
-			System.out.println(thread.getName() + " Thread Started");
+			System.out.println("Starting: " + thread.getName() + " Thread Started");
 		}
 		for (Thread thread: threadsList)
 			try { thread.join(); }
 		catch (InterruptedException ignore) {
-			System.out.println("Main thread is mother fucker");
+			System.out.println("---- Main Thread Problem: Got Interrupted Exeption 'ignore' ----");
 		}
+		System.out.println("******* MIS NITAY *******");
+
 		Diary.getInstance().output();
 
 

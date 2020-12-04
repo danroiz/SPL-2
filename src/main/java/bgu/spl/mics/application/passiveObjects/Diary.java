@@ -1,4 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -10,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Diary {
     public AtomicInteger totalAttacks = new AtomicInteger();
+    public long startStamp = new Timestamp(System.currentTimeMillis()).getTime();
     public long HanSoloFinish; // indicates when HanSolo finished all of his attacks
     public long C3POFinish;
     public long R2D2Deactivate;
@@ -25,28 +27,28 @@ public class Diary {
         totalAttacks.incrementAndGet();
     }
     public void logHanSoloFinish () {
-        this.HanSoloFinish = new Timestamp(System.currentTimeMillis()).getTime();
+        this.HanSoloFinish = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logC3POFinish () {
-        this.C3POFinish = new Timestamp(System.currentTimeMillis()).getTime();
+        this.C3POFinish = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logR2D2Deactivate () {
-        this.R2D2Deactivate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.R2D2Deactivate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logLeiaTerminate () {
-        this.LeiaTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.LeiaTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logHanSoloTerminate () {
-        this.HanSoloTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.HanSoloTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logC3POTerminate () {
-        this.C3POTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.C3POTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logR2D2Terminate () {
-        this.R2D2Terminate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.R2D2Terminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public void logLandoTerminate () {
-        this.LandoTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+        this.LandoTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
     }
     public static Diary getInstance(){
         return DiaryHolder.instance;

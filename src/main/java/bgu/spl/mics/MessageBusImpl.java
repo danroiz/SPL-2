@@ -65,8 +65,11 @@ public class MessageBusImpl implements MessageBus {
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
 		if (broadcastToMicroServiceQueueMap.get(type) == null) // first micro service to subscribe for this type of broadcast
 			broadcastToMicroServiceQueueMap.put(type,new ConcurrentLinkedQueue<>()); // create new list for this type
-		broadcastToMicroServiceQueueMap.get(type).add(m); // add the micro service to the list
-		microServiceToBroadcast.get(m).add(type); // add the type to the list of types which m subscribed to
+		//synchronized (broadcastToMicroServiceQueueMap.get(type)) {
+			broadcastToMicroServiceQueueMap.get(type).add(m); // add the micro service to the list
+			microServiceToBroadcast.get(m).add(type); // add the type to the list of types which m subscribed to
+	//	}
+
     }
 
 	@Override
@@ -81,8 +84,12 @@ public class MessageBusImpl implements MessageBus {
 	public void sendBroadcast(Broadcast b) {
 		ConcurrentLinkedQueue<MicroService> subscribersQueue = broadcastToMicroServiceQueueMap.get(b.getClass());
 		if (subscribersQueue != null){
-			for(MicroService ms : subscribersQueue){ // check if need to be synchronized
-				microServiceToMsgQueueMap.get(ms).add(b);
+			//synchronized (broadcastToMicroServiceQueueMap.get(b.getClass())) {
+				for (MicroService ms : broadcastToMicroServiceQueueMap.get(b.getClass())) { // check if need to be synchronized
+					//synchronized (microServiceToMsgQueueMap.get(ms)) {
+						microServiceToMsgQueueMap.get(ms).add(b);
+					//}
+				//}
 			}
 		}
 	}
@@ -165,7 +172,9 @@ public class MessageBusImpl implements MessageBus {
 		for (Class<? extends Event> type: eventTypes )
 			eventToMicroServicesQueueMap.get(type).remove(m);
 		for (Class<? extends Broadcast> type: broadcastsTypes)
-			broadcastToMicroServiceQueueMap.get(type).remove(m);
+			//synchronized (broadcastToMicroServiceQueueMap.get(type)) {
+				broadcastToMicroServiceQueueMap.get(type).remove(m);
+			//}
 		microServiceToMsgQueueMap.remove(m); // what to do if m has messages in its queue and it unregistered itself?
 		microServiceToBroadcast.remove(m);
 		microServiceToEvent.remove(m);
@@ -173,6 +182,8 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public Message awaitMessage(MicroService m) throws InterruptedException {
-		return microServiceToMsgQueueMap.get(m).take(); // blocking method until new message is received
+		//synchronized (microServiceToMsgQueueMap.get(m)) {
+			return microServiceToMsgQueueMap.get(m).take(); // blocking method until new message is received
+		//}
 	}
 }

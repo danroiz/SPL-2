@@ -16,17 +16,18 @@ public class AttackEvent implements Event<Boolean> {
     }
     public void act () {
         List<Integer> serials = attack.getSerials();
-        System.out.println("attack event start of " + Thread.currentThread().getName());
+        System.out.println("- Attack Event class: act: start: " + Thread.currentThread().getName());
         Ewoks.getInstance().acquireEwoks(serials);
         try {
+            System.out.println("+++++++entering sleeping for: " + attack.getDuration() + " Thread: " + Thread.currentThread().getName());
             Thread.sleep(attack.getDuration());
         }
         catch (InterruptedException e){
-            System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
+            System.out.println("- Attack Event: interrupt while act: " + Thread.currentThread().getName());
         }
 
          Ewoks.getInstance().releaseEwoks(serials);
-        System.out.println("attack event finish of " + Thread.currentThread().getName());
+        System.out.println("- Attack Event class: act: finish: " + Thread.currentThread().getName());
 
         Diary.getInstance().incrementAttack();
     }

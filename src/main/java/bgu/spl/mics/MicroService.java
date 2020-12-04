@@ -58,8 +58,8 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-        messageBus.subscribeEvent(type, this);
         messageToCallbackMap.put(type,callback);
+        messageBus.subscribeEvent(type, this);
     }
 
     /**
@@ -83,8 +83,9 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-        messageBus.subscribeBroadcast(type, this);
         messageToCallbackMap.put(type,callback);
+        messageBus.subscribeBroadcast(type, this);
+
     }
 
     /**
@@ -158,18 +159,22 @@ public abstract class MicroService implements Runnable {
         initialize(); //
         while (!terminated){
                 try {
+                    System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " Awaiting msg !!! ENTERING BLOCK *******");
                     Message nextMessage = messageBus.awaitMessage(this);
+                    System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " got a msg *******");
                     messageToCallbackMap.get(nextMessage.getClass()).call(nextMessage);
-                    
-
+                    System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " made the callback msg *******");
                 }
             catch (InterruptedException e)
             {
                 System.out.println("Miss Chang");
             }
         }
+        System.out.println("******* Thread: " + Thread.currentThread().getName() + " FINISHED HIS MISSION and Trying to unregister *******");
 
         messageBus.unregister(this);
+        System.out.println("******* Thread: " + Thread.currentThread().getName() + " successfully UNREGISTERED *******");
+
         //add to diary termination time
 
     }

@@ -34,6 +34,7 @@ public class R2D2Microservice extends MicroService {
             complete(DeactivationEvent,true);
             Diary.getInstance().logR2D2Deactivate();
         });
+        System.out.println("R2D2 MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         deactivateLatch.countDown();
     }
 }

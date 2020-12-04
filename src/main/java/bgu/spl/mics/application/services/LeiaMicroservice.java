@@ -52,33 +52,50 @@ public class LeiaMicroservice extends MicroService {
         }
 
         for (Attack attack : attacks){
+            System.out.println("++++++++++Leia is sending attack event: " + attack.getDuration());
             attackFutures.add(sendEvent(new AttackEvent(attack))); // send all the attack-events, and save the returned future
         }
         boolean finishAllAttacks = true;
         for (Future<Boolean> future : attackFutures) { // Leia wait's until all attacks are over
-            System.out.println(         "Future : " + future + " is weird");
+            System.out.println(                                                                    "Leia MS: init: checking the future.get : " + future);
             finishAllAttacks = finishAllAttacks & future.get();
             if (!finishAllAttacks) // DEBUG PURPOSE
                 System.out.println("WTF future AttackEvent finished get but resolve was false");
         }
-        System.out.println("FINISHED ALL THE ATTACKS");
+        System.out.println("------ All The Attacks Finished: waiting to DEACTIVATION LATCH");
         try {
-            deactivateLatch.await();}
+            System.out.println("------ All The Attacks Finished: ---TRY CATCH LOOP---");
+            if (deactivateLatch.getCount() != 0)
+                deactivateLatch.await();
+        }
         catch (InterruptedException ignored){
             System.out.println("Thread: Leia was interrupted during latch waiting");
         }
+
+        System.out.println("******* R2D2 successfully subscribed to deactivation event *******");
+
+
         Future<Boolean> R2D2Future= sendEvent(new DeactivationEvent(R2D2));
         boolean R2D2Finished = R2D2Future.get();
-        if (!R2D2Finished) System.out.println("WTF future RD2 finished get but resolved was false");
+        System.out.println("******* R2D2 successfully FINISHED HIS MISSION: DEACTIVATE *******");
 
+        if (!R2D2Finished) System.out.println("***** PROBLEM **** WTF future RD2 finished get but resolved was false");
+
+        System.out.println("******* Before starting to wait to Lando destroy LUCH *******");
         try {
+            System.out.println("------ Waiting for Lando to downlatch: ---TRY CATCH LOOP---");
             destroyLatch.await();}
         catch (InterruptedException ignored){
             System.out.println("Thread: Leia was interrupted during latch waiting");
         }
+        System.out.println("******* Lando successfully subscribed to BombDestroy event *******");
+        System.out.println("******* Leia will send BombDestroy Event to Lando *******");
         Future<Boolean> destroyerFuture = sendEvent(new BombDestroyerEvent(Lando));
+        System.out.println("******* Leia successfully sended BombDestroy Event to Lando *******");
         if (!destroyerFuture.get()) System.out.println("WTF future of Destroyer finished get but resolved was false");
+        System.out.println("******* Leia want them all to TERMINATE *******");
         sendBroadcast(new TerminateBroadcast());
+        System.out.println("******* MIS CHANG *******");
 
     	/*
     	// subscribe to all the shit

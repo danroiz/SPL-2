@@ -26,15 +26,15 @@ public class Ewok {
     public synchronized void acquire() {
 		while (!available){
 		    try{
-                System.out.println("Thread :" + Thread.currentThread().getName() + " entered wait");
+                System.out.println("---- EWOK ACQUIRE: START Thread :" + Thread.currentThread().getName() + " entered wait, tried to acquire: " + this.serialNumber);
 		        wait();}
 		    catch (InterruptedException e) {
-                System.out.println("Thread: " + Thread.currentThread().getName() + " interupted");
+                System.out.println("---- EWOK ACQUIRE --PROBLEM --: Thread: " + Thread.currentThread().getName() + " interupted");
             }
         }
-        System.out.println("Thread: " + Thread.currentThread().getName() + " acquire ewok: " + this.serialNumber);
+    //    System.out.println("Thread: " + Thread.currentThread().getName() + " acquire ewok: " + this.serialNumber);
 		available = false;
-        System.out.println("                                                                        available is: " + available + " ewok: " + this.serialNumber);
+        System.out.println("---- EWOK ACQUIRE: FINISH: Thread :" + Thread.currentThread().getName() + " success acquire: " + this.serialNumber);
     }
 
     /**
@@ -42,8 +42,8 @@ public class Ewok {
      */
     public synchronized void release() {
         if (available)
-            System.out.println("Thread: " + Thread.currentThread().getName() + " released an ewok " + this.serialNumber + " who was already released WTF22222");
-        System.out.println("Thread: " + Thread.currentThread().getName() + " is realsing ewok: " + this.serialNumber);
+            System.out.println("---- EWOK RELEASE: --PROBLEM-- Thread :" + Thread.currentThread().getName() + " trying to release ewok " + this.serialNumber + " BUT is already released");
+        System.out.println("---- EWOK RELEASE: FINISH Thread :" + Thread.currentThread().getName() + " success release ewok " + this.serialNumber);
         available = true;
     	notifyAll();
     }
