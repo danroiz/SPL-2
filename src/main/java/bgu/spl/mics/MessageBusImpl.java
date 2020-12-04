@@ -20,7 +20,7 @@ public class MessageBusImpl implements MessageBus {
 	private ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
 
 	private ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
-	private ConcurrentHashMap<Class<? extends Broadcast>, ConcurrentLinkedQueue<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
+	private ConcurrentHashMap<Class<? extends Broadcast>, Vector<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
 
 	// TO DO: Change it to Vector
 	private ConcurrentHashMap<MicroService, Vector<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
@@ -64,7 +64,7 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
 		if (broadcastToMicroServiceQueueMap.get(type) == null) // first micro service to subscribe for this type of broadcast
-			broadcastToMicroServiceQueueMap.put(type,new ConcurrentLinkedQueue<>()); // create new list for this type
+			broadcastToMicroServiceQueueMap.put(type,new Vector<>()); // create new list for this type
 		//synchronized (broadcastToMicroServiceQueueMap.get(type)) {
 			broadcastToMicroServiceQueueMap.get(type).add(m); // add the micro service to the list
 			microServiceToBroadcast.get(m).add(type); // add the type to the list of types which m subscribed to
@@ -82,8 +82,8 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		ConcurrentLinkedQueue<MicroService> subscribersQueue = broadcastToMicroServiceQueueMap.get(b.getClass());
-		if (subscribersQueue != null){
+		Vector<MicroService> subscribers = broadcastToMicroServiceQueueMap.get(b.getClass());
+		if (subscribers != null){
 			//synchronized (broadcastToMicroServiceQueueMap.get(b.getClass())) {
 				for (MicroService ms : broadcastToMicroServiceQueueMap.get(b.getClass())) { // check if need to be synchronized
 					//synchronized (microServiceToMsgQueueMap.get(ms)) {
