@@ -1,6 +1,8 @@
 package bgu.spl.mics.application.passiveObjects;
 import bgu.spl.mics.application.StarWarsParser;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -18,7 +20,7 @@ public class Ewoks {
     private Ewoks (int numberOfEwoks) {
         ewoks = new Vector<Ewok>(numberOfEwoks);
         for (int i = 0;i < numberOfEwoks;i++) {
-            ewoks.set(i, new Ewok(i + 1));
+            ewoks.add(i, new Ewok(i + 1));
         }
     }
     private static Ewoks instance;
@@ -30,7 +32,7 @@ public class Ewoks {
         return instance;
     }
 
-    public static Ewoks getInstance() throws Exception { // classic singleton
+    public static Ewoks getInstance() { // classic singleton
         if (instance == null) {
             System.out.println("first init to Ewoks was not in main thread");
             //throw new Exception("first init to Ewoks was not in main thread");
@@ -39,11 +41,13 @@ public class Ewoks {
 
     }
     public void acquireEwoks (List<Integer> serials) {
+        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).acquire();
         }
     }
     public void releaseEwoks (List<Integer> serials) {
+        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).release();
         }

@@ -8,7 +8,7 @@ package bgu.spl.mics.application.passiveObjects;
  */
 public class Ewok {
 	int serialNumber;
-	boolean available;
+	volatile boolean available;
 
     /**
      * Ewok Constructor
@@ -25,21 +25,26 @@ public class Ewok {
      */
     public synchronized void acquire() {
 		while (!available){
-		    try{ wait();}
+		    try{
+                System.out.println("Thread :" + Thread.currentThread().getName() + " entered wait");
+		        wait();}
 		    catch (InterruptedException e) {
                 System.out.println("Thread: " + Thread.currentThread().getName() + " interupted");
             }
         }
+        System.out.println("Thread: " + Thread.currentThread().getName() + " acquire ewok: " + this.serialNumber);
 		available = false;
+        System.out.println("                                                                        available is: " + available + " ewok: " + this.serialNumber);
     }
 
     /**
      * release an Ewok
      */
     public synchronized void release() {
-        if (available = true)
-            System.out.println("Thread: " + Thread.currentThread().getName() + " released an ewok " + this.serialNumber + " who was already released WTF" );
-    	available = true;
+        if (available)
+            System.out.println("Thread: " + Thread.currentThread().getName() + " released an ewok " + this.serialNumber + " who was already released WTF22222");
+        System.out.println("Thread: " + Thread.currentThread().getName() + " is realsing ewok: " + this.serialNumber);
+        available = true;
     	notifyAll();
     }
 }

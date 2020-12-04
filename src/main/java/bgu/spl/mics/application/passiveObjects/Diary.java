@@ -1,4 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
+import java.sql.Timestamp;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -20,10 +21,45 @@ public class Diary {
     private static class DiaryHolder {
         private static Diary instance = new Diary();
     }
-
+    public void incrementAttack () {
+        totalAttacks.incrementAndGet();
+    }
+    public void logHanSoloFinish () {
+        this.HanSoloFinish = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logC3POFinish () {
+        this.C3POFinish = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logR2D2Deactivate () {
+        this.R2D2Deactivate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logLeiaTerminate () {
+        this.LeiaTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logHanSoloTerminate () {
+        this.HanSoloTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logC3POTerminate () {
+        this.C3POTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logR2D2Terminate () {
+        this.R2D2Terminate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
+    public void logLandoTerminate () {
+        this.LandoTerminate = new Timestamp(System.currentTimeMillis()).getTime();
+    }
     public static Diary getInstance(){
         return DiaryHolder.instance;
     }
-
-
+    public void output () {
+        System.out.println("Total Attacks= " + totalAttacks);
+        System.out.println("HanSoloFinish = " + HanSoloFinish);
+        System.out.println("C3POFinish = " + C3POFinish);
+        System.out.println("R2D2Deactivate = " + R2D2Deactivate);
+        System.out.println("LeiaTerminate = " + LeiaTerminate);
+        System.out.println("HanSoloTerminate = " + HanSoloTerminate);
+        System.out.println("C3POTerminate = " + C3POTerminate);
+        System.out.println("R2D2Terminate = " + R2D2Terminate);
+        System.out.println("LandoTerminate = " + LandoTerminate);
+    }
 }

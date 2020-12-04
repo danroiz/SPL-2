@@ -23,7 +23,7 @@ public abstract class MicroService implements Runnable {
     private String name;
     private MessageBus messageBus;
     private boolean terminated;
-    private HashMap<Class<? extends Message>, Callback<? extends Message>> messageToCallbackMap;
+    private HashMap<Class<? extends Message>, Callback> messageToCallbackMap;
 
     /**
      * @param name the micro-service name (used mainly for debugging purposes -
@@ -159,8 +159,8 @@ public abstract class MicroService implements Runnable {
         while (!terminated){
                 try {
                     Message nextMessage = messageBus.awaitMessage(this);
-                    Callback callback = messageToCallbackMap.get(nextMessage.getClass());
-                    callback.call(nextMessage); // what to do with message?
+                    messageToCallbackMap.get(nextMessage.getClass()).call(nextMessage);
+                    
 
                 }
             catch (InterruptedException e)

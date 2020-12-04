@@ -134,12 +134,14 @@ public class MessageBusImpl implements MessageBus {
 				subscribersQueue.add(nextToReceiveEvent); // add back the micro-service to the subscriber-queue (by round-robin)
 			}
 
-			if (microServiceToMsgQueueMap.get(nextToReceiveEvent).offer(e)){ // ad
+			if (microServiceToMsgQueueMap.get(nextToReceiveEvent) != null){ // ad
 				future = new Future<T>();
 				eventToFutureMap.put(e, future);
+				if (!microServiceToMsgQueueMap.get(nextToReceiveEvent).offer(e))
+					System.out.println("WTF WHY FAILED TO ADD EVENT: " + e + " TO MICROSERVICE:" + nextToReceiveEvent.getName()); // DEBUG PURPOSES
 			}
 			else // DEBUG PURPOSES
-				System.out.println("WTF WHY FAILED TO ADD EVENT: " + e + " TO MICROSERVICE:" + nextToReceiveEvent.getName());
+				System.out.println("WTF WHY FAILED TO GET THE MESSAGE QUEUE OF " + nextToReceiveEvent.getName());
 		}
 		return future;
 	}
