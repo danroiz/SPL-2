@@ -15,7 +15,7 @@ public class DeactivationEvent implements Event<Boolean>{
             Thread.sleep(deactivationTime);
         }
         catch (InterruptedException ignored) {
-            System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
+         //   System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
         }
     }
 }

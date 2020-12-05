@@ -1,6 +1,7 @@
 package bgu.spl.mics;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -64,11 +65,11 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void subscribeBroadcast(Class<? extends Broadcast> type, MicroService m) {
 		if (broadcastToMicroServiceQueueMap.get(type) == null) // first micro service to subscribe for this type of broadcast
-			broadcastToMicroServiceQueueMap.put(type,new Vector<>()); // create new list for this type
-		//synchronized (broadcastToMicroServiceQueueMap.get(type)) {
-			broadcastToMicroServiceQueueMap.get(type).add(m); // add the micro service to the list
+			broadcastToMicroServiceQueueMap.putIfAbsent(type,new Vector<>()); // create new list for this type
+		synchronized (broadcastToMicroServiceQueueMap.get(type)) {
 			microServiceToBroadcast.get(m).add(type); // add the type to the list of types which m subscribed to
-	//	}
+			broadcastToMicroServiceQueueMap.get(type).add(m); // add the micro service to the list
+		}
 
     }
 
@@ -83,12 +84,16 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void sendBroadcast(Broadcast b) {
 		Vector<MicroService> subscribers = broadcastToMicroServiceQueueMap.get(b.getClass());
-		if (subscribers != null){
-			//synchronized (broadcastToMicroServiceQueueMap.get(b.getClass())) {
-				for (MicroService ms : broadcastToMicroServiceQueueMap.get(b.getClass())) { // check if need to be synchronized
-					//synchronized (microServiceToMsgQueueMap.get(ms)) {
-						microServiceToMsgQueueMap.get(ms).add(b);
-					//}
+		if (subscribers != null) {
+			synchronized (broadcastToMicroServiceQueueMap.get(b.getClass())) {
+				for (Iterator<MicroService> iterator = broadcastToMicroServiceQueueMap.get(b.getClass()).iterator(); iterator.hasNext(); ) {
+					MicroService value = iterator.next();
+					microServiceToMsgQueueMap.get(value).add(b);
+				}
+//				for (MicroService ms : broadcastToMicroServiceQueueMap.get(b.getClass())) { // check if need to be synchronized
+//					//synchronized (microServiceToMsgQueueMap.get(ms)) {
+//						microServiceToMsgQueueMap.get(ms).add(b);
+				//}
 				//}
 			}
 		}
@@ -172,9 +177,9 @@ public class MessageBusImpl implements MessageBus {
 		for (Class<? extends Event> type: eventTypes )
 			eventToMicroServicesQueueMap.get(type).remove(m);
 		for (Class<? extends Broadcast> type: broadcastsTypes)
-			//synchronized (broadcastToMicroServiceQueueMap.get(type)) {
+			synchronized (broadcastToMicroServiceQueueMap.get(type)) {
 				broadcastToMicroServiceQueueMap.get(type).remove(m);
-			//}
+			}
 		microServiceToMsgQueueMap.remove(m); // what to do if m has messages in its queue and it unregistered itself?
 		microServiceToBroadcast.remove(m);
 		microServiceToEvent.remove(m);

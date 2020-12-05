@@ -30,7 +30,7 @@ public class LandoMicroservice  extends MicroService {
             complete(bombDestroyerEvent,true);
         }); // (attackEvent) -> attackEvent.act()
 
-        System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
+      //  System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         destroyLatch.countDown();
     }
 }

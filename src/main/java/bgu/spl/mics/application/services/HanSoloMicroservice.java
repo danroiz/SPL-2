@@ -35,7 +35,7 @@ public class HanSoloMicroservice extends MicroService {
         subscribeEvent(AttackEvent.class, (attackEvent) -> {
             attackEvent.act();
             complete(attackEvent,true);
-            System.out.println("Thread: ");
+        //    System.out.println("Thread: ");
             Diary.getInstance().logHanSoloFinish();
         });
         latch.countDown();

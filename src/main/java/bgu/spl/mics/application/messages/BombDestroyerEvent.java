@@ -14,7 +14,7 @@ public class BombDestroyerEvent implements Event<Boolean> {
             Thread.sleep(destroyTime);
         }
         catch (InterruptedException ignored) {
-            System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
+     //       System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
         }
 
     }

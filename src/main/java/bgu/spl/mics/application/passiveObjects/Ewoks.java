@@ -27,19 +27,24 @@ public class Ewoks {
     public static Ewoks getFirstInstance(int num) { // init passive objects in the main
         if (instance == null)
            instance = new Ewoks(num);
-        else
-            System.out.println("You cannot initialize Ewoks Twice");
+      //  else
+    //        System.out.println("You cannot initialize Ewoks Twice");
         return instance;
     }
 
     public static Ewoks getInstance() { // classic singleton
         if (instance == null) {
-            System.out.println("first init to Ewoks was not in main thread");
+    //        System.out.println("first init to Ewoks was not in main thread");
             //throw new Exception("first init to Ewoks was not in main thread");
         }
         return instance;
 
     }
+
+    public static void reset() {
+        instance = null;
+    }
+
     public void acquireEwoks (List<Integer> serials) {
         Collections.sort(serials);
         for (Integer serial: serials) {

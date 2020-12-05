@@ -20,6 +20,11 @@ public class Diary {
     public long C3POTerminate;
     public long R2D2Terminate;
     public long LandoTerminate;
+
+    public void resetNumberAttacks() {
+        totalAttacks = new AtomicInteger(0);
+    }
+
     private static class DiaryHolder {
         private static Diary instance = new Diary();
     }

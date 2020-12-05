@@ -10,6 +10,9 @@ import com.google.gson.Gson;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
@@ -27,11 +30,10 @@ public class Main {
 //			System.out.println(inty);
 //		}
 //
-		for (int i = 0; i < 50; i++) {
 			CountDownLatch attackLatch = new CountDownLatch(2);
 			CountDownLatch deactivateLatch = new CountDownLatch(1);
 			CountDownLatch destroyLatch = new CountDownLatch(1);
-			StarWarsParser starWarsParser = getStarWarsParser(args[0]);
+			StarWarsParser starWarsParser = getStarWarsParser("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\input2.json");
 			Ewoks.getFirstInstance(starWarsParser.getEwoks());
 			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando(), attackLatch, deactivateLatch, destroyLatch);
 			MicroService C3PO = new C3POMicroservice(attackLatch);
@@ -67,9 +69,13 @@ public class Main {
 				} catch (InterruptedException ignore) {
 					System.out.println("---- Main Thread Problem: Got Interrupted Exeption 'ignore' ----");
 				}
-			System.out.println("******* MIS NITAY *******");
+			// System.out.println("******* MIS NITAY *******");
 
 			Diary.getInstance().output();
+
+			gsonOutput("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\output.json");
+		System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
+		Ewoks.reset();
 		}
 
 //
@@ -80,8 +86,19 @@ public class Main {
 //		System.out.println(starWarsParser.attacks[0].getSerials());
 //		System.out.println(starWarsParser.attacks[1].getDuration());
 //		System.out.println(starWarsParser.attacks[1].getSerials());
-	}
 
+	private static void gsonOutput(final String path) {
+		Output output = new Output();
+		Gson gson = new Gson();
+		//Writer writer = Files.newBufferedWriter(Paths.get(path));
+		try	(Writer writer = Files.newBufferedWriter(Paths.get(path));){
+			 gson.toJson(output,writer);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(-1);
+		}
+
+	}
 
 	private static StarWarsParser getStarWarsParser(final String path) {
 		Gson gson = new Gson();
