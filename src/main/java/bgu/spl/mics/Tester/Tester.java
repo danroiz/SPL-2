@@ -174,22 +174,13 @@ public class Tester {
     */
 
     public class Event1 implements Event<Boolean> {
-        @Override
-        public void act() {
 
-        }
     }
     public class Event2 implements Event<Boolean> {
-        @Override
-        public void act() {
 
-        }
     }
     public class Event3 implements Event<String>  {
-        @Override
-        public void act() {
 
-        }
     }
 
     public class Broadcast1 implements Broadcast {

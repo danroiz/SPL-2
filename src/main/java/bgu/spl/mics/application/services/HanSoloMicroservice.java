@@ -6,9 +6,11 @@ import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.AttackEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.passiveObjects.Attack;
 import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -33,9 +35,24 @@ public class HanSoloMicroservice extends MicroService {
             Diary.getInstance().logHanSoloTerminate();
         }); // subscribe to termination broadcast
         subscribeEvent(AttackEvent.class, (attackEvent) -> {
-            attackEvent.act();
+            Attack attack = attackEvent.getAttack();
+            List<Integer> serials = attack.getSerials();
+            // System.out.println("- Attack Event class: act: start: " + Thread.currentThread().getName());
+            Ewoks.getInstance().acquireEwoks(serials);
+            try {
+                //    System.out.println("+++++++entering sleeping for: " + attack.getDuration() + " Thread: " + Thread.currentThread().getName());
+                Thread.sleep(attack.getDuration());
+            }
+            catch (InterruptedException e){
+                //      System.out.println("- Attack Event: interrupt while act: " + Thread.currentThread().getName());
+            }
+
+            Ewoks.getInstance().releaseEwoks(serials);
+            //    System.out.println("- Attack Event class: act: finish: " + Thread.currentThread().getName());
+
+            Diary.getInstance().incrementAttack();
             complete(attackEvent,true);
-        //    System.out.println("Thread: ");
+            //    System.out.println("Thread: ");
             Diary.getInstance().logHanSoloFinish();
         });
         LatchSingleton.getAttackLatch().countDown();

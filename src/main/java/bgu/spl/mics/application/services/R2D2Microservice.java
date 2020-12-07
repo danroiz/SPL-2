@@ -29,12 +29,17 @@ public class R2D2Microservice extends MicroService {
             terminate();
             Diary.getInstance().logR2D2Terminate();
         }); // subscribe to termination broadcast
-        subscribeEvent(DeactivationEvent.class, (DeactivationEvent) -> {
-            DeactivationEvent.act();
-            complete(DeactivationEvent,true);
+        subscribeEvent(DeactivationEvent.class, (deactivationEvent) -> {
+            try {
+                Thread.sleep(deactivationEvent.getDeactivationTime());
+            }
+            catch (InterruptedException ignored) {
+                //   System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
+            }
+            complete(deactivationEvent,true);
             Diary.getInstance().logR2D2Deactivate();
         });
-    //    System.out.println("R2D2 MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
+        //    System.out.println("R2D2 MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         LatchSingleton.getDeactivateLatch().countDown();
     }
 }

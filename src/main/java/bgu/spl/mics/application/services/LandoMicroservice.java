@@ -26,11 +26,17 @@ public class LandoMicroservice  extends MicroService {
             Diary.getInstance().logLandoTerminate();
         }); // subscribe to termination broadcast
         subscribeEvent(BombDestroyerEvent.class, (bombDestroyerEvent) -> {
-            bombDestroyerEvent.act();
+
+            try {
+                Thread.sleep(bombDestroyerEvent.getDestroyTime());
+            }
+            catch (InterruptedException ignored) {
+                //       System.out.println("Thread: " + Thread.currentThread().getName() + " was interrupted");
+            }
             complete(bombDestroyerEvent,true);
         }); // (attackEvent) -> attackEvent.act()
 
-      //  System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
+        //  System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         LatchSingleton.getDestroyLatch().countDown();
     }
 }
