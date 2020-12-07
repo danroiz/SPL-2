@@ -15,17 +15,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MessageBusImpl implements MessageBus {
 
 	// *check if maps need to be concurrent maps*
-	private ConcurrentHashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
+	private final ConcurrentHashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
 
 	// TO DO: CONSIDER CHANGING TO BLOCKING QUEUE
-	private ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
+	private final ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
 
-	private ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
-	private ConcurrentHashMap<Class<? extends Broadcast>, Vector<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
+	private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
+	private final ConcurrentHashMap<Class<? extends Broadcast>, Vector<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
 
 	// TO DO: Change it to Vector
-	private ConcurrentHashMap<MicroService, Vector<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
-	private ConcurrentHashMap<MicroService, Vector<Class<? extends Broadcast>>> microServiceToBroadcast; // given a micro-service, get all the types of broadcasts it registered to.
+	private final ConcurrentHashMap<MicroService, Vector<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
+	private final ConcurrentHashMap<MicroService, Vector<Class<? extends Broadcast>>> microServiceToBroadcast; // given a micro-service, get all the types of broadcasts it registered to.
 
 	private static class MessageBusHolder {
 		private static MessageBusImpl instance = new MessageBusImpl();
@@ -75,8 +75,10 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public <T> void complete(Event<T> e, T result) {
-		if (eventToFutureMap.containsKey(e))
+		if (eventToFutureMap.containsKey(e)) {
 			eventToFutureMap.get(e).resolve(result);
+			eventToFutureMap.remove(e);
+		}
 		else // DEBUG PURPOSES
 			System.out.println("didn't found matching future for event: " + e);
 	}
