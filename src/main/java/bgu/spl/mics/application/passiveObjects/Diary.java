@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Diary {
     public AtomicInteger totalAttacks = new AtomicInteger();
-    public long startStamp = new Timestamp(System.currentTimeMillis()).getTime();
+    public long startStamp = System.currentTimeMillis();
     public long HanSoloFinish; // indicates when HanSolo finished all of his attacks
     public long C3POFinish;
     public long R2D2Deactivate;
@@ -32,28 +32,28 @@ public class Diary {
         totalAttacks.incrementAndGet();
     }
     public void logHanSoloFinish () {
-        this.HanSoloFinish = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.HanSoloFinish = System.currentTimeMillis()  - startStamp;
     }
     public void logC3POFinish () {
-        this.C3POFinish = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.C3POFinish = System.currentTimeMillis() - startStamp;
     }
     public void logR2D2Deactivate () {
-        this.R2D2Deactivate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.R2D2Deactivate = System.currentTimeMillis() - startStamp;
     }
     public void logLeiaTerminate () {
-        this.LeiaTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.LeiaTerminate = System.currentTimeMillis() - startStamp;
     }
     public void logHanSoloTerminate () {
-        this.HanSoloTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.HanSoloTerminate = System.currentTimeMillis() - startStamp;
     }
     public void logC3POTerminate () {
-        this.C3POTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.C3POTerminate = System.currentTimeMillis() - startStamp;
     }
     public void logR2D2Terminate () {
-        this.R2D2Terminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.R2D2Terminate = System.currentTimeMillis() - startStamp;
     }
     public void logLandoTerminate () {
-        this.LandoTerminate = new Timestamp(System.currentTimeMillis()).getTime() - startStamp;
+        this.LandoTerminate = System.currentTimeMillis() - startStamp;
     }
     public static Diary getInstance(){
         return DiaryHolder.instance;
