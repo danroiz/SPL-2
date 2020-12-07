@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -17,10 +18,9 @@ import java.util.concurrent.CountDownLatch;
  */
 public class R2D2Microservice extends MicroService {
 
-    private CountDownLatch deactivateLatch;
-    public R2D2Microservice(CountDownLatch deactivateLatch) {
+
+    public R2D2Microservice() {
         super("R2D2");
-        this.deactivateLatch = deactivateLatch;
     }
 
     @Override
@@ -35,6 +35,6 @@ public class R2D2Microservice extends MicroService {
             Diary.getInstance().logR2D2Deactivate();
         });
     //    System.out.println("R2D2 MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
-        deactivateLatch.countDown();
+        LatchSingleton.getDeactivateLatch().countDown();
     }
 }

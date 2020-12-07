@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.AttackEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -18,17 +19,13 @@ import java.util.concurrent.CountDownLatch;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class C3POMicroservice extends MicroService {
-	CountDownLatch latch;
 
-	// this is dummy constructor for tests purposes
+
 	public C3POMicroservice(){
         super("C3PO");
     }
 
-    public C3POMicroservice(CountDownLatch latch) {
-        super("C3PO");
-        this.latch = latch;
-    }
+
 
     @Override
     protected void initialize() {
@@ -45,6 +42,6 @@ public class C3POMicroservice extends MicroService {
             Diary.getInstance().logC3POFinish();
         }); // (attackEvent) -> attackEvent.act()
 
-        latch.countDown();
+        LatchSingleton.getAttackLatch().countDown();
     }
 }

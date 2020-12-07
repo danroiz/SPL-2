@@ -1,6 +1,7 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.BombDestroyerEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -13,10 +14,9 @@ import java.util.concurrent.CountDownLatch;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class LandoMicroservice  extends MicroService {
-    private CountDownLatch destroyLatch;
-    public LandoMicroservice(CountDownLatch destroyLatch) {
+
+    public LandoMicroservice() {
         super("Lando");
-        this.destroyLatch = destroyLatch;
     }
 
     @Override
@@ -31,6 +31,6 @@ public class LandoMicroservice  extends MicroService {
         }); // (attackEvent) -> attackEvent.act()
 
       //  System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
-        destroyLatch.countDown();
+        LatchSingleton.getDestroyLatch().countDown();
     }
 }

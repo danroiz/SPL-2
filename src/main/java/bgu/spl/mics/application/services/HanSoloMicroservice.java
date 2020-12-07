@@ -3,6 +3,7 @@ package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.AttackEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -19,10 +20,9 @@ import java.util.concurrent.CountDownLatch;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class HanSoloMicroservice extends MicroService {
-    CountDownLatch latch;
-    public HanSoloMicroservice(CountDownLatch latch) {
+
+    public HanSoloMicroservice( ) {
         super("Han");
-        this.latch = latch;
     }
 
 
@@ -38,7 +38,7 @@ public class HanSoloMicroservice extends MicroService {
         //    System.out.println("Thread: ");
             Diary.getInstance().logHanSoloFinish();
         });
-        latch.countDown();
+        LatchSingleton.getAttackLatch().countDown();
     }
 
 }

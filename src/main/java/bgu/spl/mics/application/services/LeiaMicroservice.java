@@ -6,6 +6,7 @@ import java.util.concurrent.CountDownLatch;
 
 import bgu.spl.mics.Future;
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.AttackEvent;
 import bgu.spl.mics.application.messages.BombDestroyerEvent;
 import bgu.spl.mics.application.messages.DeactivationEvent;
@@ -25,15 +26,12 @@ public class LeiaMicroservice extends MicroService {
 	private Attack[] attacks;
 	private final long R2D2;
 	private long Lando;
-	private CountDownLatch attackLatch, deactivateLatch, destroyLatch;
-    public LeiaMicroservice(Attack[] attacks, long R2D2, long Lando, CountDownLatch attackLatch, CountDownLatch deactivateLatch, CountDownLatch destroyLatch) {
+
+    public LeiaMicroservice(Attack[] attacks, long R2D2, long Lando) {
         super("Leia");
 		this.attacks = attacks;
 		this.R2D2 = R2D2;
 		this.Lando = Lando;
-		this.attackLatch = attackLatch;
-		this.deactivateLatch = deactivateLatch;
-		this.destroyLatch = destroyLatch;
     }
 
     @Override
@@ -46,7 +44,7 @@ public class LeiaMicroservice extends MicroService {
 
         List<Future<Boolean>> attackFutures = new ArrayList<>();
         try {
-            attackLatch.await();}
+            LatchSingleton.getAttackLatch().await();}
         catch (InterruptedException ignored){
         //    System.out.println("Thread: Leia was interrupted during latch waiting");
         }
@@ -65,8 +63,8 @@ public class LeiaMicroservice extends MicroService {
     //    System.out.println("------ All The Attacks Finished: waiting to DEACTIVATION LATCH");
         try {
       //      System.out.println("------ All The Attacks Finished: ---TRY CATCH LOOP---");
-            if (deactivateLatch.getCount() != 0)
-                deactivateLatch.await();
+            if (LatchSingleton.getDeactivateLatch().getCount() > 0)
+                LatchSingleton.getDeactivateLatch().await();
         }
         catch (InterruptedException ignored){
      //       System.out.println("Thread: Leia was interrupted during latch waiting");
@@ -84,7 +82,9 @@ public class LeiaMicroservice extends MicroService {
    //     System.out.println("******* Before starting to wait to Lando destroy LUCH *******");
         try {
       //      System.out.println("------ Waiting for Lando to downlatch: ---TRY CATCH LOOP---");
-            destroyLatch.await();}
+            if (LatchSingleton.getDestroyLatch().getCount() > 0)
+                LatchSingleton.getDestroyLatch().await();
+        }
         catch (InterruptedException ignored){
     //        System.out.println("Thread: Leia was interrupted during latch waiting");
         }

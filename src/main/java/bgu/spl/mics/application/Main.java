@@ -30,16 +30,14 @@ public class Main {
 //			System.out.println(inty);
 //		}
 //
-			CountDownLatch attackLatch = new CountDownLatch(2);
-			CountDownLatch deactivateLatch = new CountDownLatch(1);
-			CountDownLatch destroyLatch = new CountDownLatch(1);
-			StarWarsParser starWarsParser = getStarWarsParser("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\input2.json");
+
+			StarWarsParser starWarsParser = getStarWarsParser("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\input2.json");
 			Ewoks.getFirstInstance(starWarsParser.getEwoks());
-			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando(), attackLatch, deactivateLatch, destroyLatch);
-			MicroService C3PO = new C3POMicroservice(attackLatch);
-			MicroService HanSolo = new HanSoloMicroservice(attackLatch);
-			MicroService R2D2 = new R2D2Microservice(deactivateLatch);
-			MicroService Lando = new LandoMicroservice(destroyLatch);
+			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando());
+			MicroService C3PO = new C3POMicroservice();
+			MicroService HanSolo = new HanSoloMicroservice();
+			MicroService R2D2 = new R2D2Microservice();
+			MicroService Lando = new LandoMicroservice();
 			List<Thread> threadsList = new ArrayList<>();
 			Thread liea_ = new Thread(Leia);
 			liea_.setName("Liea");
@@ -73,9 +71,10 @@ public class Main {
 
 		//	Diary.getInstance().output();
 
-			gsonOutput("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\output.json");
+			gsonOutput("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\output.json");
 		//System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
 		Ewoks.reset();
+		LatchSingleton.reset();
 		}
 
 //

@@ -109,11 +109,11 @@ public class Tester {
         Test currentTests[];
         Diary diaryInstance = Diary.getInstance();
         try {
-            currentTests = getTestsFromJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\src\\main\\java\\Tests.json");
+            currentTests = getTestsFromJson("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\src\\main\\java\\Tests.json");
             for (int i = 0; i < currentTests.length; i++) {
-                saveOutputToJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\input2.json", currentTests[i]);
+                saveOutputToJson("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\input2.json", currentTests[i]);
                 //An output file shall be only created whenever the program finishes it's logic.
-                File outputFile = new File("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\output.json");
+                File outputFile = new File("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\output.json");
                 if (outputFile.exists()) outputFile.delete();
                 Main.main(null);
                 do {
@@ -256,7 +256,7 @@ public class Tester {
 
             boolean passedFirstTest = true;
             boolean passedSecondTest = true;
-            hanSoloObj = new HanSoloMicroservice(new CountDownLatch(2));
+            hanSoloObj = new HanSoloMicroservice();
             C3POObj = new C3POMicroservice();
 
             MessageBusImpl messageInstance = MessageBusImpl.getInstance();
@@ -335,7 +335,7 @@ public class Tester {
             /*
              Multi Threaded Check Against SubscribingToEvents
             */
-            hanSoloObj = new HanSoloMicroservice(new CountDownLatch(2));
+            hanSoloObj = new HanSoloMicroservice();
             messageInstance.register(hanSoloObj);
             messageInstance.subscribeEvent(Event1.class, hanSoloObj);
             messageInstance.subscribeBroadcast(Broadcast1.class
