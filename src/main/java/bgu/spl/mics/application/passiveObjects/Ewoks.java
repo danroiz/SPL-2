@@ -24,18 +24,16 @@ public class Ewoks {
         }
     }
     private static Ewoks instance;
-    public static Ewoks getFirstInstance(int num) { // init passive objects in the main
+    public static void initialize(int size) { // Main responsibility to first init Ewoks
         if (instance == null)
-           instance = new Ewoks(num);
+           instance = new Ewoks(size);
       //  else
     //        System.out.println("You cannot initialize Ewoks Twice");
-        return instance;
     }
 
     public static Ewoks getInstance() { // classic singleton
         if (instance == null) {
-    //        System.out.println("first init to Ewoks was not in main thread");
-            //throw new Exception("first init to Ewoks was not in main thread");
+            System.out.println("first init to Ewoks was not in main thread"); // sanity check. won't happen in our application.
         }
         return instance;
 

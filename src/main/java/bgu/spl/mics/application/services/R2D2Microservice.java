@@ -1,12 +1,9 @@
 package bgu.spl.mics.application.services;
-
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Diary;
-
-import java.util.concurrent.CountDownLatch;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.
@@ -27,7 +24,6 @@ public class R2D2Microservice extends MicroService {
     protected void initialize() {
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-            //Diary.getInstance().logR2D2Terminate();
         }); // subscribe to termination broadcast
         subscribeEvent(DeactivationEvent.class, (deactivationEvent) -> {
             try {

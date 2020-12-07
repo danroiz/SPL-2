@@ -7,10 +7,7 @@ import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Attack;
 import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
-
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 
 /**
@@ -36,7 +33,6 @@ public class C3POMicroservice extends MicroService {
             //System.out.println("Thread: " + Thread.currentThread().getName() + " callback on terminate, time: " + new Timestamp(System.currentTimeMillis()).getTime());
             terminate();
             //System.out.println("TRYING TO TERMINATE C3PO===================================");
-            //Diary.getInstance().logC3POTerminate();
 
         }); // subscribe to termination broadcast
         subscribeEvent(AttackEvent.class, (attackEvent) -> {

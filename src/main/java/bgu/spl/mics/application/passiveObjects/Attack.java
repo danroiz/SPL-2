@@ -1,6 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -22,15 +21,6 @@ public class Attack {
         this.serials = serialNumbers;
         this.duration = duration;
         Collections.sort(serials); // Sort the serials to prevent deadlock on accquire Ewoks collection
-    }
-    public void act () throws InterruptedException {
-        Ewoks.getInstance().acquireEwoks(serials);
-        Thread.sleep(duration);
-        Ewoks.getInstance().releaseEwoks(serials);
-        if (Thread.currentThread().getName() == "C3PO")
-            Diary.getInstance().logC3POFinish();
-        if (Thread.currentThread().getName() == "HanSolo")
-            Diary.getInstance().logHanSoloFinish();
     }
     public int getDuration() {return duration;}
     public List<Integer> getSerials(){return serials;}

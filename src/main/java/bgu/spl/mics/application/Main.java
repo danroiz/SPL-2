@@ -1,7 +1,6 @@
 package bgu.spl.mics.application;
 
 import bgu.spl.mics.MicroService;
-import bgu.spl.mics.application.passiveObjects.Attack;
 import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 import bgu.spl.mics.application.services.*;
@@ -14,7 +13,6 @@ import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
 
 /** This is the Main class of the application. You should parse the input file,
  * create the different components of the application, and run the system.
@@ -23,16 +21,9 @@ import java.util.concurrent.CountDownLatch;
 public class Main {
 	public static void main(String[] args) {
 
-//		List<Integer> list = new LinkedList<>();
-//		list.add(5); list.add(2); list.add(9);
-//		Collections.sort(list);
-//		for (Integer inty : list){
-//			System.out.println(inty);
-//		}
-//
 
 			StarWarsParser starWarsParser = getStarWarsParser("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\input2.json");
-			Ewoks.getFirstInstance(starWarsParser.getEwoks());
+			Ewoks.initialize(starWarsParser.getEwoks());
 			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando());
 			MicroService C3PO = new C3POMicroservice();
 			MicroService HanSolo = new HanSoloMicroservice();

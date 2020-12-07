@@ -175,7 +175,9 @@ public class MessageBusImpl implements MessageBus {
 		Vector<Class<? extends Event>> eventTypes  = microServiceToEvent.get(m);
 		Vector<Class<? extends Broadcast>> broadcastsTypes = microServiceToBroadcast.get(m);
 		for (Class<? extends Event> type: eventTypes )
-			eventToMicroServicesQueueMap.get(type).remove(m);
+			synchronized (eventToMicroServicesQueueMap.get(type)){
+				eventToMicroServicesQueueMap.get(type).remove(m);
+			}
 		for (Class<? extends Broadcast> type: broadcastsTypes)
 			synchronized (broadcastToMicroServiceQueueMap.get(type)) {
 				broadcastToMicroServiceQueueMap.get(type).remove(m);

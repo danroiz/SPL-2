@@ -8,7 +8,7 @@ package bgu.spl.mics.application.passiveObjects;
  */
 public class Ewok {
 	int serialNumber;
-	volatile boolean available;
+	boolean available;
 
     /**
      * Ewok Constructor
@@ -45,6 +45,6 @@ public class Ewok {
       //      System.out.println("---- EWOK RELEASE: --PROBLEM-- Thread :" + Thread.currentThread().getName() + " trying to release ewok " + this.serialNumber + " BUT is already released");
       //  System.out.println("---- EWOK RELEASE: FINISH Thread :" + Thread.currentThread().getName() + " success release ewok " + this.serialNumber);
         available = true;
-    	notifyAll();
+    	notify(); // because all threads wait on the same condition.
     }
 }

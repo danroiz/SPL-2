@@ -1,9 +1,6 @@
 package bgu.spl.mics.application.services;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-
 import bgu.spl.mics.Future;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.LatchSingleton;
@@ -39,7 +36,6 @@ public class LeiaMicroservice extends MicroService {
 
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-           // Diary.getInstance().logLeiaTerminate();
         }); // subscribe to termination broadcast // subscribe to termination broadcast
 
         List<Future<Boolean>> attackFutures = new ArrayList<>();
