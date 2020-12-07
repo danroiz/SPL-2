@@ -36,7 +36,7 @@ public class C3POMicroservice extends MicroService {
             //System.out.println("Thread: " + Thread.currentThread().getName() + " callback on terminate, time: " + new Timestamp(System.currentTimeMillis()).getTime());
             terminate();
             //System.out.println("TRYING TO TERMINATE C3PO===================================");
-            Diary.getInstance().logC3POTerminate();
+            //Diary.getInstance().logC3POTerminate();
 
         }); // subscribe to termination broadcast
         subscribeEvent(AttackEvent.class, (attackEvent) -> {
@@ -61,5 +61,10 @@ public class C3POMicroservice extends MicroService {
         });
 
         LatchSingleton.getAttackLatch().countDown();
+    }
+    @Override
+    protected void close() {
+        //System.out.println("TRYING TO TERMINATE C3PO===================================");
+        Diary.getInstance().logC3POTerminate();
     }
 }

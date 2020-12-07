@@ -134,6 +134,11 @@ public abstract class MicroService implements Runnable {
     protected abstract void initialize();
 
     /**
+     * this method is called right before thread is terminated.
+     */
+    protected abstract void close();
+
+    /**
      * Signals the event loop that it must terminate after handling the current
      * message.
      */
@@ -173,6 +178,7 @@ public abstract class MicroService implements Runnable {
       //  System.out.println("******* Thread: " + Thread.currentThread().getName() + " FINISHED HIS MISSION and Trying to unregister *******");
 
         messageBus.unregister(this);
+        close();
      //   System.out.println("******* Thread: " + Thread.currentThread().getName() + " successfully UNREGISTERED *******");
 
         //add to diary termination time

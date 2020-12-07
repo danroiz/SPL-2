@@ -27,7 +27,7 @@ public class R2D2Microservice extends MicroService {
     protected void initialize() {
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-            Diary.getInstance().logR2D2Terminate();
+            //Diary.getInstance().logR2D2Terminate();
         }); // subscribe to termination broadcast
         subscribeEvent(DeactivationEvent.class, (deactivationEvent) -> {
             try {
@@ -41,5 +41,9 @@ public class R2D2Microservice extends MicroService {
         });
         //    System.out.println("R2D2 MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         LatchSingleton.getDeactivateLatch().countDown();
+    }
+    @Override
+    protected void close() {
+        Diary.getInstance().logR2D2Terminate();
     }
 }

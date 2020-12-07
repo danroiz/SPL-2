@@ -39,7 +39,7 @@ public class LeiaMicroservice extends MicroService {
 
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-            Diary.getInstance().logLeiaTerminate();
+           // Diary.getInstance().logLeiaTerminate();
         }); // subscribe to termination broadcast // subscribe to termination broadcast
 
         List<Future<Boolean>> attackFutures = new ArrayList<>();
@@ -105,5 +105,9 @@ public class LeiaMicroservice extends MicroService {
     	// send deactivation event to R2D2
     	//
     	 */
+    }
+    @Override
+    protected void close() {
+         Diary.getInstance().logLeiaTerminate();
     }
 }

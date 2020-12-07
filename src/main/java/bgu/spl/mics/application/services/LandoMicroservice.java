@@ -23,7 +23,7 @@ public class LandoMicroservice  extends MicroService {
     protected void initialize() {
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-            Diary.getInstance().logLandoTerminate();
+           // Diary.getInstance().logLandoTerminate();
         }); // subscribe to termination broadcast
         subscribeEvent(BombDestroyerEvent.class, (bombDestroyerEvent) -> {
 
@@ -38,5 +38,9 @@ public class LandoMicroservice  extends MicroService {
 
         //  System.out.println("LANDO MS: init: --ENTERING THE DOWNLATCH COUNTING to the subscribe event--");
         LatchSingleton.getDestroyLatch().countDown();
+    }
+    @Override
+    protected void close() {
+        Diary.getInstance().logLandoTerminate();
     }
 }

@@ -32,7 +32,7 @@ public class HanSoloMicroservice extends MicroService {
     protected void initialize() {
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
-            Diary.getInstance().logHanSoloTerminate();
+          //  Diary.getInstance().logHanSoloTerminate();
         }); // subscribe to termination broadcast
         subscribeEvent(AttackEvent.class, (attackEvent) -> {
             Attack attack = attackEvent.getAttack();
@@ -57,5 +57,8 @@ public class HanSoloMicroservice extends MicroService {
         });
         LatchSingleton.getAttackLatch().countDown();
     }
-
+    @Override
+    protected void close() {
+        Diary.getInstance().logHanSoloTerminate();
+    }
 }
