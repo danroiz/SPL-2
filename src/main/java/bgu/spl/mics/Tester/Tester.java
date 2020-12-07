@@ -89,11 +89,11 @@ public class Tester {
     //Generates numOfTestsToGenerate Tests
     public void generateTests() {
         //Number of tests that are generated each time
-        int numOfTestsToGenerate = 20;
+        int numOfTestsToGenerate = 1000;
         Test[] randTests = new Test[numOfTestsToGenerate];
         for (int i = 0; i < numOfTestsToGenerate; i++)
             randTests[i] = generateTest(i);
-        saveOutputToJson("Tests.json", randTests);
+        saveOutputToJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\Tests.json", randTests);
     }
 
     //Returns minimum long from 4 inputs
@@ -109,11 +109,11 @@ public class Tester {
         Test currentTests[];
         Diary diaryInstance = Diary.getInstance();
         try {
-            currentTests = getTestsFromJson("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\Tests.json");
+            currentTests = getTestsFromJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\src\\main\\java\\Tests.json");
             for (int i = 0; i < currentTests.length; i++) {
-                saveOutputToJson("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\input2.json", currentTests[i]);
+                saveOutputToJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\input2.json", currentTests[i]);
                 //An output file shall be only created whenever the program finishes it's logic.
-                File outputFile = new File("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\Output.json");
+                File outputFile = new File("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\output.json");
                 if (outputFile.exists()) outputFile.delete();
                 Main.main(null);
                 do {

@@ -33,7 +33,7 @@ public class Main {
 			CountDownLatch attackLatch = new CountDownLatch(2);
 			CountDownLatch deactivateLatch = new CountDownLatch(1);
 			CountDownLatch destroyLatch = new CountDownLatch(1);
-			StarWarsParser starWarsParser = getStarWarsParser("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\input2.json");
+			StarWarsParser starWarsParser = getStarWarsParser("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\input2.json");
 			Ewoks.getFirstInstance(starWarsParser.getEwoks());
 			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando(), attackLatch, deactivateLatch, destroyLatch);
 			MicroService C3PO = new C3POMicroservice(attackLatch);
@@ -57,11 +57,11 @@ public class Main {
 			threadsList.add(HanSolo_);
 			threadsList.add(R2D2_);
 			threadsList.add(Lando_);
-			System.out.println("---- STARTING THE PROGRAM ----");
+		//	System.out.println("---- STARTING THE PROGRAM ----");
 			Diary.getInstance();
 			for (Thread thread : threadsList) {
 				thread.start();
-				System.out.println("Starting: " + thread.getName() + " Thread Started");
+			//	System.out.println("Starting: " + thread.getName() + " Thread Started");
 			}
 			for (Thread thread : threadsList)
 				try {
@@ -71,10 +71,10 @@ public class Main {
 				}
 			// System.out.println("******* MIS NITAY *******");
 
-			Diary.getInstance().output();
+		//	Diary.getInstance().output();
 
-			gsonOutput("C:\\Users\\Danro\\Desktop\\SPL-2\\src\\main\\java\\output.json");
-		System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
+			gsonOutput("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\output.json");
+		//System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
 		Ewoks.reset();
 		}
 
