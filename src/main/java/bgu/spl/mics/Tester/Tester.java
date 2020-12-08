@@ -93,7 +93,7 @@ public class Tester {
         Test[] randTests = new Test[numOfTestsToGenerate];
         for (int i = 0; i < numOfTestsToGenerate; i++)
             randTests[i] = generateTest(i);
-        saveOutputToJson("C:\\Dor\\BGU\\C\\SPL\\SPL-2\\Tests.json", randTests);
+        saveOutputToJson("Tests.json", randTests);
     }
 
     //Returns minimum long from 4 inputs
@@ -109,11 +109,11 @@ public class Tester {
         Test currentTests[];
         Diary diaryInstance = Diary.getInstance();
         try {
-            currentTests = getTestsFromJson("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\src\\main\\java\\Tests.json");
+            currentTests = getTestsFromJson("Tests.json");
             for (int i = 0; i < currentTests.length; i++) {
-                saveOutputToJson("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\input2.json", currentTests[i]);
+                saveOutputToJson("input2.json", currentTests[i]);
                 //An output file shall be only created whenever the program finishes it's logic.
-                File outputFile = new File("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\output.json");
+                File outputFile = new File("output.json");
                 if (outputFile.exists()) outputFile.delete();
                 Main.main(null);
                 do {

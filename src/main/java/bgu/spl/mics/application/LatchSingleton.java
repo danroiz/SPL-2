@@ -3,7 +3,7 @@ package bgu.spl.mics.application;
 import java.util.concurrent.CountDownLatch;
 
 public class LatchSingleton {
-    public static void reset() {
+    public static void initialize() {
         LatchSingletonHolder.reset();
     }
 
@@ -12,10 +12,13 @@ public class LatchSingleton {
         private static CountDownLatch deactivateLatch = new CountDownLatch(1);
         private static CountDownLatch destroyLatch = new CountDownLatch(1);
 
-        public static void reset() {
-            attackLatch = new CountDownLatch(2);
-            deactivateLatch = new CountDownLatch(1);
-            destroyLatch = new CountDownLatch(1);
+        private static void reset() {
+            if (attackLatch.getCount() != 2)
+                attackLatch = new CountDownLatch(2);
+            if (attackLatch.getCount() != 1)
+                deactivateLatch = new CountDownLatch(1);
+            if (attackLatch.getCount() != 1)
+                destroyLatch = new CountDownLatch(1);
         }
     }
     public static CountDownLatch getAttackLatch(){

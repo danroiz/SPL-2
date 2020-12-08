@@ -1,4 +1,5 @@
 package bgu.spl.mics.application.passiveObjects;
+import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.application.StarWarsParser;
 
 import java.util.Collections;
@@ -15,32 +16,28 @@ import java.util.Vector;
  *
  */
 public class Ewoks {
+
     private Vector<Ewok> ewoks;
 
-    private Ewoks (int numberOfEwoks) {
-        ewoks = new Vector<Ewok>(numberOfEwoks);
-        for (int i = 0;i < numberOfEwoks;i++) {
+    private static class EwoksHolder {
+        private static Ewoks instance = new Ewoks();
+    }
+
+    private Ewoks() {
+        ewoks = new Vector<>();
+    }
+
+
+
+    public void initialize(int size) { // Main responsibility to first init Ewoks
+        ewoks = new Vector<>(size);
+        for (int i = 0;i < size;i++) {
             ewoks.add(i, new Ewok(i + 1));
         }
     }
-    private static Ewoks instance;
-    public static void initialize(int size) { // Main responsibility to first init Ewoks
-        if (instance == null)
-           instance = new Ewoks(size);
-      //  else
-    //        System.out.println("You cannot initialize Ewoks Twice");
-    }
 
     public static Ewoks getInstance() { // classic singleton
-        if (instance == null) {
-            System.out.println("first init to Ewoks was not in main thread"); // sanity check. won't happen in our application.
-        }
-        return instance;
-
-    }
-
-    public static void reset() {
-        instance = null;
+        return EwoksHolder.instance;
     }
 
     public void acquireEwoks (List<Integer> serials) {

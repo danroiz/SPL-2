@@ -21,9 +21,9 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) {
 
-
-			StarWarsParser starWarsParser = getStarWarsParser("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\input2.json");
-			Ewoks.initialize(starWarsParser.getEwoks());
+			StarWarsParser starWarsParser = getStarWarsParser("input2.json");
+			Ewoks.getInstance().initialize(starWarsParser.getEwoks());
+			LatchSingleton.initialize();
 			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando());
 			MicroService C3PO = new C3POMicroservice();
 			MicroService HanSolo = new HanSoloMicroservice();
@@ -62,10 +62,8 @@ public class Main {
 
 		//	Diary.getInstance().output();
 
-			gsonOutput("C:\\Users\\Danro\\Documents\\Semester_C\\SPL\\SPL-2\\output.json");
+			gsonOutput("output.json");
 		//System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
-		Ewoks.reset();
-		LatchSingleton.reset();
 		}
 
 //

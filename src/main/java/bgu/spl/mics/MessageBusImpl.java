@@ -1,6 +1,5 @@
 package bgu.spl.mics;
-import bgu.spl.mics.application.messages.TerminateBroadcast;
-
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,15 +14,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MessageBusImpl implements MessageBus {
 
 	// *check if maps need to be concurrent maps*
-	private final ConcurrentHashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
+	private final HashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
 
-	// TO DO: CONSIDER CHANGING TO BLOCKING QUEUE
 	private final ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
-
 	private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
 	private final ConcurrentHashMap<Class<? extends Broadcast>, Vector<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
-
-	// TO DO: Change it to Vector
 	private final ConcurrentHashMap<MicroService, Vector<Class<? extends Event>>> microServiceToEvent; // given a micro-service, get all the types of events it registered to.
 	private final ConcurrentHashMap<MicroService, Vector<Class<? extends Broadcast>>> microServiceToBroadcast; // given a micro-service, get all the types of broadcasts it registered to.
 
@@ -36,7 +31,7 @@ public class MessageBusImpl implements MessageBus {
 	}
 
 	private MessageBusImpl(){
-		eventToFutureMap = new ConcurrentHashMap<>();
+		eventToFutureMap = new HashMap<>();
 		microServiceToMsgQueueMap = new ConcurrentHashMap<>();
 		eventToMicroServicesQueueMap = new ConcurrentHashMap<>();
 		broadcastToMicroServiceQueueMap = new ConcurrentHashMap<>();
