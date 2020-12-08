@@ -1,5 +1,4 @@
 package bgu.spl.mics.application.passiveObjects;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -22,6 +21,20 @@ public class Attack {
         this.duration = duration;
         Collections.sort(serials); // Sort the serials to prevent deadlock on accquire Ewoks collection
     }
-    public int getDuration() {return duration;}
-    public List<Integer> getSerials(){return serials;}
+
+    /**
+     *
+     * @return the duration time needed for the attack
+     */
+    public int getDuration() {
+        return duration;
+    }
+
+    /**
+     *
+     * @return list of serials of resources for the attack
+     */
+    public List<Integer> getSerials(){
+        return serials;
+    }
 }

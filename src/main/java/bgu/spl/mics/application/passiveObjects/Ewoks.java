@@ -28,26 +28,40 @@ public class Ewoks {
     }
 
 
-
-    public void initialize(int size) { // Main responsibility to first init Ewoks
+    /**
+     * initializing the ewoks list
+     * @param size the number of ewoks in the application
+     */
+    public void initialize(int size) {
         ewoks = new Vector<>(size);
         for (int i = 0;i < size;i++) {
             ewoks.add(i, new Ewok(i + 1));
         }
     }
 
+    /**
+     *
+     * @return the Ewoks singleton instance
+     */
     public static Ewoks getInstance() { // classic singleton
         return EwoksHolder.instance;
     }
 
+    /**
+     * acquiring the ewoks from serials list
+     * @param serials the id's of the desired ewoks
+     */
     public void acquireEwoks (List<Integer> serials) {
-        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).acquire();
         }
     }
+
+    /**
+     * releasing the ewoks from serials list
+     * @param serials the id's of the desired ewoks
+     */
     public void releaseEwoks (List<Integer> serials) {
-        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).release();
         }

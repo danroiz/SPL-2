@@ -93,6 +93,4 @@ public interface MessageBus {
      *                              to became available.
      */
     Message awaitMessage(MicroService m) throws InterruptedException;
-    // return next available Message in the queue of m)
-    
 }

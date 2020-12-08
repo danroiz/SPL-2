@@ -34,8 +34,7 @@ public class Future<T> {
 		while (!isDone){
 			try{
 				wait();
-			} catch (InterruptedException e) {
-				System.out.println("Current Thread: " + Thread.currentThread().getName() + " was interrupted in future.get()");
+			} catch (InterruptedException ignored) {
 			}
 		}
 		return result;
@@ -45,10 +44,6 @@ public class Future<T> {
      * Resolves the result of this Future object.
      */
 	public synchronized void resolve (T result) {
-		// debug purpose
-		if (isDone)
-			System.out.println("WTF future is already resolved. current thread: " + Thread.currentThread().getName());
-
 		this.result = result;
 		isDone = true;
 		notifyAll();
@@ -77,11 +72,9 @@ public class Future<T> {
 			try {
 				wait(unit.convert(timeout,unit));
 				return result;
-			} catch (InterruptedException e) {
-				System.out.println("thread " + Thread.currentThread().getName() +  " was interrupted");
+			} catch (InterruptedException ignored) {
 			}
 		}
 		return result;
 	}
-
 }
