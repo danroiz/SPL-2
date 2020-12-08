@@ -20,12 +20,12 @@ import java.util.*;
  */
 public class Main {
 	public static void main(String[] args) {
-		StarWarsParser starWarsParser = getStarWarsParser("input2.json"); // args[0]
+		StarWarsParser starWarsParser = getStarWarsParser("input2.json");
 		initPassiveObjects(starWarsParser);
 		List<Thread> threadsList = prepareThreads(starWarsParser);
 		startAllTheThreads(threadsList);
 		completeThreads(threadsList);
-		gsonOutput("output.json"); // args[1]
+		gsonOutput("output.json");
 	}
 
 	/**

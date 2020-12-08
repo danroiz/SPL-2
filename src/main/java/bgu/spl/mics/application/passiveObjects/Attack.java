@@ -19,7 +19,6 @@ public class Attack {
     public Attack(List<Integer> serialNumbers, int duration) {
         this.serials = serialNumbers;
         this.duration = duration;
-        Collections.sort(serials); // Sort the serials to prevent deadlock on accquire Ewoks collection
     }
 
     /**

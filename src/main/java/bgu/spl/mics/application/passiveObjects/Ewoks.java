@@ -52,6 +52,7 @@ public class Ewoks {
      * @param serials the id's of the desired ewoks
      */
     public void acquireEwoks (List<Integer> serials) {
+        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).acquire();
         }
@@ -62,6 +63,7 @@ public class Ewoks {
      * @param serials the id's of the desired ewoks
      */
     public void releaseEwoks (List<Integer> serials) {
+        Collections.sort(serials);
         for (Integer serial: serials) {
             ewoks.get(serial-1).release();
         }
