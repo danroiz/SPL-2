@@ -3,6 +3,8 @@ package bgu.spl.mics.application.services;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.LatchSingleton;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.messages.LandoSaysHiBroadcast;
+import bgu.spl.mics.application.messages.R2D2SaysHiBroadcast;
 import bgu.spl.mics.application.messages.TerminateBroadcast;
 import bgu.spl.mics.application.passiveObjects.Attack;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -29,6 +31,8 @@ public class C3POMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
+        subscribeBroadcast(LandoSaysHiBroadcast.class, (LandoSaysHiBroadcast)-> System.out.println("Lando said hi to thread: " + this + " " + Thread.currentThread().getName()));
+        subscribeBroadcast(R2D2SaysHiBroadcast.class, (R2D2SaysHiBroadcast)-> System.out.println("R2D2 said hi to thread: " + this + " " + Thread.currentThread().getName()));
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             //System.out.println("Thread: " + Thread.currentThread().getName() + " callback on terminate, time: " + new Timestamp(System.currentTimeMillis()).getTime());
             terminate();

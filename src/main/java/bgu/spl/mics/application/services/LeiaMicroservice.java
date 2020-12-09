@@ -4,10 +4,7 @@ import java.util.List;
 import bgu.spl.mics.Future;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.LatchSingleton;
-import bgu.spl.mics.application.messages.AttackEvent;
-import bgu.spl.mics.application.messages.BombDestroyerEvent;
-import bgu.spl.mics.application.messages.DeactivationEvent;
-import bgu.spl.mics.application.messages.TerminateBroadcast;
+import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Attack;
 import bgu.spl.mics.application.passiveObjects.Diary;
 
@@ -20,24 +17,19 @@ import bgu.spl.mics.application.passiveObjects.Diary;
  * You MAY change constructor signatures and even add new public constructors.
  */
 public class LeiaMicroservice extends MicroService {
-	private Attack[] attacks;
-	private final long R2D2;
-	private long Lando;
+	private final Attack[] attacks;
 
-    public LeiaMicroservice(Attack[] attacks, long R2D2, long Lando) {
+
+    public LeiaMicroservice(Attack[] attacks) {
         super("Leia");
 		this.attacks = attacks;
-		this.R2D2 = R2D2;
-		this.Lando = Lando;
     }
 
     @Override
     protected void initialize() {
-
         subscribeBroadcast(TerminateBroadcast.class, (terminateBroadcast)-> {
             terminate();
         }); // subscribe to termination broadcast // subscribe to termination broadcast
-
         List<Future<Boolean>> attackFutures = new ArrayList<>();
         try {
             LatchSingleton.getAttackLatch().await();}
@@ -69,8 +61,11 @@ public class LeiaMicroservice extends MicroService {
      //   System.out.println("******* R2D2 successfully subscribed to deactivation event *******");
 
 
-        Future<Boolean> R2D2Future= sendEvent(new DeactivationEvent(R2D2));
-        boolean R2D2Finished = R2D2Future.get();
+        Future<Boolean> R2D2Future= sendEvent(new DeactivationEvent());
+        //if (R2D2Future != null){
+            sendBroadcast(new R2D2SaysHiBroadcast());
+            R2D2Future.get();
+        //}
       //  System.out.println("******* R2D2 successfully FINISHED HIS MISSION: DEACTIVATE *******");
 
      //   if (!R2D2Finished) System.out.println("***** PROBLEM **** WTF future RD2 finished get but resolved was false");
@@ -86,12 +81,19 @@ public class LeiaMicroservice extends MicroService {
         }
      //   System.out.println("******* Lando successfully subscribed to BombDestroy event *******");
     //    System.out.println("******* Leia will send BombDestroy Event to Lando *******");
-        Future<Boolean> destroyerFuture = sendEvent(new BombDestroyerEvent(Lando));
+        Future<Boolean> destroyerFuture = sendEvent(new BombDestroyerEvent());
    //     System.out.println("******* Leia successfully sended BombDestroy Event to Lando *******");
-          boolean LandoFinished = destroyerFuture.get();
+       // if (destroyerFuture != null) {
+            sendBroadcast(new LandoSaysHiBroadcast());
+            destroyerFuture.get();
+       // }
+
+
+
+        LatchSingleton.getTerminateLatch().countDown();
    //     if (!destroyerFuture.get()) System.out.println("WTF future of Destroyer finished get but resolved was false");
    //     System.out.println("******* Leia want them all to TERMINATE *******");
-        sendBroadcast(new TerminateBroadcast());
+        //sendBroadcast(new TerminateBroadcast());
     //    System.out.println("******* MIS CHANG *******");
 
     	/*
@@ -105,5 +107,6 @@ public class LeiaMicroservice extends MicroService {
     @Override
     protected void close() {
          Diary.getInstance().logLeiaTerminate();
+
     }
 }

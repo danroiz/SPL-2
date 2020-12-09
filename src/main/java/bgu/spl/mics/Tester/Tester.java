@@ -71,12 +71,12 @@ public class Tester {
                     serialsUsedInAttack.add(r);
             }
             if (serialsUsedInAttack.isEmpty()) serialsUsedInAttack.add(1);
-            generatedAttacks[i] = new Attack(serialsUsedInAttack, (int) (Math.random() * (3000) + 1000));
+            generatedAttacks[i] = new Attack(serialsUsedInAttack, (int) (Math.random() * (300) + 100));
         }
         generatedTest.setAttacks(generatedAttacks);
         generatedTest.setEwoks(numEwoks);
-        generatedTest.setLando((int) (Math.random() * (2000) + 1000));
-        generatedTest.setR2D2((int) (Math.random() * (2000) + 1000));
+        generatedTest.setLando((int) (Math.random() * (200) + 100));
+        generatedTest.setR2D2((int) (Math.random() * (200) + 100));
         generatedTest.setTestId(id);
         generatedTest.setNumOfAttacks(generatedAttacks.length);
         //Set generatedTest vals so we can save it easily via the class reference
@@ -89,7 +89,7 @@ public class Tester {
     //Generates numOfTestsToGenerate Tests
     public void generateTests() {
         //Number of tests that are generated each time
-        int numOfTestsToGenerate = 1000;
+        int numOfTestsToGenerate = 20;
         Test[] randTests = new Test[numOfTestsToGenerate];
         for (int i = 0; i < numOfTestsToGenerate; i++)
             randTests[i] = generateTest(i);
@@ -111,18 +111,20 @@ public class Tester {
         try {
             currentTests = getTestsFromJson("Tests.json");
             for (int i = 0; i < currentTests.length; i++) {
-                saveOutputToJson("input2.json", currentTests[i]);
+                saveOutputToJson("tester_input.json", currentTests[i]);
                 //An output file shall be only created whenever the program finishes it's logic.
-                File outputFile = new File("output.json");
+                File outputFile = new File("Output.json");
                 if (outputFile.exists()) outputFile.delete();
-                Main.main(null);
+                String[] args = new String[2];
+                args[0] = "tester_input.json"; args[1] = "output.json";
+                Main.main(args);
                 do {
                     Thread.sleep(10);
                 } while (!outputFile.exists());
                 System.out.println("\r\n\r\nFinished Test --- > " + i);
-                AtomicInteger numOfAttacksInTest = diaryInstance.totalAttacks;
-                long startingTimeOfTest = Math.max(diaryInstance.C3POFinish, diaryInstance.HanSoloFinish);
-                long shieldDeactivationTestValue = (diaryInstance.R2D2Deactivate - startingTimeOfTest);
+                AtomicInteger numOfAttacksInTest = diaryInstance.getNumberOfAttacks();
+                long startingTimeOfTest = Math.max(diaryInstance.getC3POFinish(), diaryInstance.getHanSoloFinish());
+                long shieldDeactivationTestValue = (diaryInstance.getR2D2Deactivate() - startingTimeOfTest);
                 System.out.println("\r\n-----------------------------------");
 
                 boolean passedFirstTest = false; //Checking Deactivation Shield Logic
@@ -130,15 +132,15 @@ public class Tester {
                 boolean passedThirdTest = true;  //Checking Graceful Termination (Should be at the same mili second~)
 
                 System.out.println("Your Deactivation Shield Finished Time --> " + shieldDeactivationTestValue + "  Test Value Should Of Been -> " + currentTests[i].getR2D2Sleep());
-                if (Math.round(shieldDeactivationTestValue / 1000) * 1000 == (Math.round(currentTests[i].getR2D2Sleep()) / 1000) * 1000)
+                if (shieldDeactivationTestValue - currentTests[i].getR2D2Sleep() < 20)
                     passedFirstTest = true;
                 if (numOfAttacksInTest.get() == (currentTests[i].getNumberOfAttacks().get()))
                     passedSecondTest = true;
 
-                long soloTerminate = (diaryInstance.HanSoloTerminate);
-                long C3POTerminate = (diaryInstance.C3POTerminate);
-                long LandoTermiante = (diaryInstance.LandoTerminate);
-                long R2D2Terminate = (diaryInstance.R2D2Terminate);
+                long soloTerminate = (diaryInstance.getHanSoloTerminate());
+                long C3POTerminate = (diaryInstance.getC3POTerminate());
+                long LandoTermiante = (diaryInstance.getLandoTerminate());
+                long R2D2Terminate = (diaryInstance.getR2D2Terminate());
 
                 long minTerminate = FindMin(soloTerminate, C3POTerminate, LandoTermiante, R2D2Terminate);
                 System.out.println("Minimum Termination Time --> " + minTerminate);
@@ -173,15 +175,9 @@ public class Tester {
     For e.x: Roundrobin  etc.
     */
 
-    public class Event1 implements Event<Boolean> {
-
-    }
-    public class Event2 implements Event<Boolean> {
-
-    }
-    public class Event3 implements Event<String>  {
-
-    }
+    public class Event1 implements Event<Boolean> {}
+    public class Event2 implements Event<Boolean> {}
+    public class Event3 implements Event<String>  {}
 
     public class Broadcast1 implements Broadcast {
     }
