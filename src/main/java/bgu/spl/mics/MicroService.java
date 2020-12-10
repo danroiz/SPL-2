@@ -85,7 +85,6 @@ public abstract class MicroService implements Runnable {
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
         messageToCallbackMap.put(type,callback);
         messageBus.subscribeBroadcast(type, this);
-
     }
 
     /**
@@ -162,27 +161,14 @@ public abstract class MicroService implements Runnable {
     public final void run() {
         messageBus.register(this);
         initialize(); //
-        while (!terminated){
-                try {
-                //    System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " Awaiting msg !!! ENTERING BLOCK *******");
-                    Message nextMessage = messageBus.awaitMessage(this);
-                 //   System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " got a msg *******");
-                    messageToCallbackMap.get(nextMessage.getClass()).call(nextMessage);
-                //    System.out.println("                            !!!!!!!! TERMINATION WHILE!!!!!!!! Thread: " + Thread.currentThread().getName() + " made the callback msg *******");
-                }
-            catch (InterruptedException e)
-            {
-             //   System.out.println("Miss Chang");
+        while (!terminated) {
+            try {
+                Message nextMessage = messageBus.awaitMessage(this);
+                messageToCallbackMap.get(nextMessage.getClass()).call(nextMessage);
+            } catch (InterruptedException ignored) {
             }
         }
-      //  System.out.println("******* Thread: " + Thread.currentThread().getName() + " FINISHED HIS MISSION and Trying to unregister *******");
-
         messageBus.unregister(this);
         close();
-     //   System.out.println("******* Thread: " + Thread.currentThread().getName() + " successfully UNREGISTERED *******");
-
-        //add to diary termination time
-
     }
-
 }

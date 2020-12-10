@@ -20,72 +20,66 @@ import java.util.*;
  */
 public class Main {
 	public static void main(String[] args) {
+		StarWarsParser starWarsParser = getStarWarsParser(args[0]); 
+		initPassiveObjects(starWarsParser);
+		List<Thread> threadsList = prepareThreads(starWarsParser);
+		startAllTheThreads(threadsList);
+		completeThreads(threadsList);
+		gsonOutput(args[1]);
+	}
 
-			StarWarsParser starWarsParser = getStarWarsParser("input2.json");
-			Ewoks.getInstance().initialize(starWarsParser.getEwoks());
-			LatchSingleton.initialize();
-			MicroService Leia = new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando());
-			MicroService C3PO = new C3POMicroservice();
-			MicroService HanSolo = new HanSoloMicroservice();
-			MicroService R2D2 = new R2D2Microservice();
-			MicroService Lando = new LandoMicroservice();
-			List<Thread> threadsList = new ArrayList<>();
-			Thread liea_ = new Thread(Leia);
-			liea_.setName("Liea");
-			Thread C3PO_ = new Thread(C3PO);
-			C3PO_.setName("C3PO");
-			Thread HanSolo_ = new Thread(HanSolo);
-			Thread R2D2_ = new Thread(R2D2);
-			Thread Lando_ = new Thread(Lando);
-			HanSolo_.setName("HanSolo");
-			R2D2_.setName("R2D2");
-			Lando_.setName("Lando");
-
-			threadsList.add(liea_);
-			threadsList.add(C3PO_);
-			threadsList.add(HanSolo_);
-			threadsList.add(R2D2_);
-			threadsList.add(Lando_);
-		//	System.out.println("---- STARTING THE PROGRAM ----");
-			Diary.getInstance();
-			for (Thread thread : threadsList) {
-				thread.start();
-			//	System.out.println("Starting: " + thread.getName() + " Thread Started");
+	/**
+	 * main waiting for all threads in threadList
+	 */
+	private static void completeThreads(List<Thread> threadsList) {
+		for (Thread thread : threadsList) {
+			try {
+				thread.join();
+			} catch (InterruptedException ignore) {
 			}
-			for (Thread thread : threadsList)
-				try {
-					thread.join();
-				} catch (InterruptedException ignore) {
-					System.out.println("---- Main Thread Problem: Got Interrupted Exeption 'ignore' ----");
-				}
-			// System.out.println("******* MIS NITAY *******");
-
-		//	Diary.getInstance().output();
-
-			gsonOutput("output.json");
-		//System.out.println("**** FINISHED TEST WITH NITAY BLESSING");
 		}
+	}
 
-//
-//		System.out.println(starWarsParser.R2D2);
-//		System.out.println(starWarsParser.Lando);
-//		System.out.println(starWarsParser.Ewoks);
-//		System.out.println(starWarsParser.attacks[0].getDuration());
-//		System.out.println(starWarsParser.attacks[0].getSerials());
-//		System.out.println(starWarsParser.attacks[1].getDuration());
-//		System.out.println(starWarsParser.attacks[1].getSerials());
+	/**
+	 * starting all the threads in the threadList
+	 */
+	private static void startAllTheThreads(List<Thread> threadsList) {
+		for (Thread thread : threadsList) {
+			thread.start();
+		}
+	}
+
+	/**
+	 * initializing all the threads in our application
+	 * @param starWarsParser = the data object of the input json file
+	 * @return list of the threads
+	 */
+	private static List<Thread> prepareThreads(StarWarsParser starWarsParser) {
+		List<Thread> threadsList = new ArrayList<>();
+		threadsList.add(new Thread(new LeiaMicroservice(starWarsParser.getAttacks())));
+		threadsList.add(new Thread(new C3POMicroservice()));
+		threadsList.add(new Thread(new HanSoloMicroservice()));
+		threadsList.add(new Thread(new R2D2Microservice(starWarsParser.getR2D2())));
+		threadsList.add(new Thread(new LandoMicroservice(starWarsParser.getLando())));
+		return threadsList;
+	}
+
+	/**
+	 * Main responsibility to first init passive objects
+	 */
+	private static void initPassiveObjects(StarWarsParser starWarsParser) {
+		Ewoks.getInstance().initialize(starWarsParser.getEwoks()); // Main responsibility to first init Ewoks
+		LatchSingleton.initialize(); // Main responsibility to first init Ewoks
+	}
 
 	private static void gsonOutput(final String path) {
-		Output output = new Output();
 		Gson gson = new Gson();
-		//Writer writer = Files.newBufferedWriter(Paths.get(path));
 		try	(Writer writer = Files.newBufferedWriter(Paths.get(path));){
-			 gson.toJson(output,writer);
+			 gson.toJson(Diary.getInstance(),writer);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-
 	}
 
 	private static StarWarsParser getStarWarsParser(final String path) {

@@ -1,62 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="bgu.spl.mics.application.passiveObjects.EwokTest" time="0" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="bgu.spl.mics.application.passiveObjects.EwokTest" time="0.031" tests="2" errors="0" skipped="0" failures="0">
   <properties>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
-    <property name="file.encoding.pkg" value="sun.io"/>
-    <property name="java.specification.version" value="1.8"/>
+    <property name="java.specification.version" value="11"/>
     <property name="sun.cpu.isalist" value=""/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
-    <property name="java.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/test-classes:/users/studs/bsc/2021/dorei/SPL-2/target/classes:/users/studs/bsc/2021/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
-    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.class.path" value="/home/dorei/Projects/SPL-2/target/test-classes:/home/dorei/Projects/SPL-2/target/classes:/home/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/home/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/home/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
+    <property name="java.vm.vendor" value="Ubuntu"/>
     <property name="sun.arch.data.model" value="64"/>
-    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="java.vendor.url" value="https://ubuntu.com/"/>
     <property name="user.timezone" value=""/>
-    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="java.vm.specification.version" value="11"/>
     <property name="os.name" value="Linux"/>
-    <property name="user.country" value="IL"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
-    <property name="sun.boot.library.path" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/amd64"/>
-    <property name="sun.java.command" value="/users/studs/bsc/2021/dorei/SPL-2/target/surefire/surefirebooter6735976867816519782.jar /users/studs/bsc/2021/dorei/SPL-2/target/surefire 2020-11-27T16-48-53_355-jvmRun1 surefire8016449310574375228tmp surefire_04903387092956732386tmp"/>
-    <property name="surefire.test.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/test-classes:/users/studs/bsc/2021/dorei/SPL-2/target/classes:/users/studs/bsc/2021/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/users/studs/bsc/2021/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
+    <property name="user.country" value="IL"/>
+    <property name="sun.boot.library.path" value="/usr/lib/jvm/java-11-openjdk-amd64/lib"/>
+    <property name="sun.java.command" value="/home/dorei/Projects/SPL-2/target/surefire/surefirebooter15341857267150505025.jar /home/dorei/Projects/SPL-2/target/surefire 2020-12-08T21-25-20_042-jvmRun1 surefire17860704059262552709tmp surefire_018063401246639600079tmp"/>
+    <property name="jdk.debug" value="release"/>
+    <property name="surefire.test.class.path" value="/home/dorei/Projects/SPL-2/target/test-classes:/home/dorei/Projects/SPL-2/target/classes:/home/dorei/.m2/repository/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter/5.7.0/junit-jupiter-5.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.7.0/junit-jupiter-api-5.7.0.jar:/home/dorei/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/dorei/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/home/dorei/.m2/repository/org/junit/platform/junit-platform-commons/1.7.0/junit-platform-commons-1.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.7.0/junit-jupiter-params-5.7.0.jar:/home/dorei/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.7.0/junit-jupiter-engine-5.7.0.jar:/home/dorei/.m2/repository/org/junit/platform/junit-platform-engine/1.7.0/junit-platform-engine-1.7.0.jar:"/>
     <property name="sun.cpu.endian" value="little"/>
-    <property name="user.home" value="/users/studs/bsc/2021/dorei"/>
+    <property name="user.home" value="/home/dorei"/>
     <property name="user.language" value="en"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
-    <property name="java.home" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre"/>
-    <property name="basedir" value="/users/studs/bsc/2021/dorei/SPL-2"/>
+    <property name="java.version.date" value="2020-11-04"/>
+    <property name="java.home" value="/usr/lib/jvm/java-11-openjdk-amd64"/>
     <property name="file.separator" value="/"/>
+    <property name="basedir" value="/home/dorei/Projects/SPL-2"/>
+    <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="line.separator" value="&#10;"/>
-    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment"/>
-    <property name="surefire.real.class.path" value="/users/studs/bsc/2021/dorei/SPL-2/target/surefire/surefirebooter6735976867816519782.jar"/>
-    <property name="sun.boot.class.path" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/resources.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/rt.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/sunrsasign.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jsse.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jce.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/charsets.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/jfr.jar:/home/studies/course/spl161/java/jdk1.8.0_65/jre/classes"/>
+    <property name="surefire.real.class.path" value="/home/dorei/Projects/SPL-2/target/surefire/surefirebooter15341857267150505025.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="java.runtime.version" value="1.8.0_65-b17"/>
-    <property name="user.name" value="dorei@wincs.cs.bgu.ac.il"/>
+    <property name="java.runtime.version" value="11.0.9.1+1-Ubuntu-0ubuntu1.18.04"/>
+    <property name="user.name" value="dorei"/>
     <property name="path.separator" value=":"/>
-    <property name="os.version" value="4.15.0-76-generic"/>
-    <property name="java.endorsed.dirs" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/endorsed"/>
-    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="os.version" value="5.4.0-54-generic"/>
+    <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="file.encoding" value="UTF-8"/>
-    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
-    <property name="localRepository" value="/users/studs/bsc/2021/dorei/.m2/repository"/>
-    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="java.vm.name" value="OpenJDK 64-Bit Server VM"/>
+    <property name="localRepository" value="/home/dorei/.m2/repository"/>
+    <property name="java.vendor.url.bug" value="https://bugs.launchpad.net/ubuntu/+source/openjdk-lts"/>
     <property name="java.io.tmpdir" value="/tmp"/>
-    <property name="java.version" value="1.8.0_65"/>
-    <property name="user.dir" value="/users/studs/bsc/2021/dorei/SPL-2"/>
+    <property name="java.version" value="11.0.9.1"/>
+    <property name="user.dir" value="/home/dorei/Projects/SPL-2"/>
     <property name="os.arch" value="amd64"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
     <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
     <property name="sun.os.patch.level" value="unknown"/>
-    <property name="java.library.path" value="/usr/lib:/usr/X11R6/lib:/usr/share/lib:/usr/openwin/lib:/usr/local/lib/X11:/usr/dt/lib/:/usr/local/lib:/usr/ucb/lib:/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib"/>
-    <property name="java.vm.info" value="mixed mode"/>
-    <property name="java.vendor" value="Oracle Corporation"/>
-    <property name="java.vm.version" value="25.65-b01"/>
-    <property name="java.ext.dirs" value="/home/studies/course/spl161/java/jdk1.8.0_65/jre/lib/ext:/usr/java/packages/lib/ext"/>
+    <property name="java.library.path" value="/usr/java/packages/lib:/usr/lib/x86_64-linux-gnu/jni:/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu:/usr/lib/jni:/lib:/usr/lib"/>
+    <property name="java.vm.info" value="mixed mode, sharing"/>
+    <property name="java.vendor" value="Ubuntu"/>
+    <property name="java.vm.version" value="11.0.9.1+1-Ubuntu-0ubuntu1.18.04"/>
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
-    <property name="java.class.version" value="52.0"/>
+    <property name="java.class.version" value="55.0"/>
   </properties>
-  <testcase name="acquire" classname="bgu.spl.mics.application.passiveObjects.EwokTest" time="0"/>
+  <testcase name="acquire" classname="bgu.spl.mics.application.passiveObjects.EwokTest" time="0.019"/>
   <testcase name="release" classname="bgu.spl.mics.application.passiveObjects.EwokTest" time="0"/>
 </testsuite>

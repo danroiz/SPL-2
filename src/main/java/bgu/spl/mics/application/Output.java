@@ -1,13 +1,10 @@
 package bgu.spl.mics.application;
-
 import bgu.spl.mics.application.passiveObjects.Diary;
 
-import java.sql.Timestamp;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Output {
     public int totalAttacks;
-    public long HanSoloFinish; // indicates when HanSolo finished all of his attacks
+    public long HanSoloFinish;
     public long C3POFinish;
     public long R2D2Deactivate;
     public long LeiaTerminate;

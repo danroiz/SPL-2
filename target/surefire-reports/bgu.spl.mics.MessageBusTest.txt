@@ -1,16 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: bgu.spl.mics.MessageBusTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.023 s <<< FAILURE! - in bgu.spl.mics.MessageBusTest
-sendBroadcast  Time elapsed: 0.017 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <bgu.spl.mics.application.messages.TerminateBroadcast@436e852b> but was: <null>
-	at bgu.spl.mics.MessageBusTest.sendBroadcast(MessageBusTest.java:48)
-
-complete  Time elapsed: 0 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: 
-	at bgu.spl.mics.MessageBusTest.complete(MessageBusTest.java:35)
-
-sendEvent  Time elapsed: 0.001 s  <<< FAILURE!
-org.opentest4j.AssertionFailedError: expected: <bgu.spl.mics.application.messages.AttackEvent@e720b71> but was: <null>
-	at bgu.spl.mics.MessageBusTest.sendEvent(MessageBusTest.java:61)
-
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s - in bgu.spl.mics.MessageBusTest
