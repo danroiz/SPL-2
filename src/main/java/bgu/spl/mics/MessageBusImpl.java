@@ -1,6 +1,4 @@
 package bgu.spl.mics;
-import java.util.HashMap;
-import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -12,7 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class MessageBusImpl implements MessageBus {
 
-	private final HashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
+	private final ConcurrentHashMap<Event, Future> eventToFutureMap; // Each event has a specific Future object related to him.
 	private final ConcurrentHashMap<MicroService, LinkedBlockingQueue<Message>> microServiceToMsgQueueMap; // Each Micro Service has a messages queue
 	private final ConcurrentHashMap<Class<? extends Event>, ConcurrentLinkedQueue<MicroService>> eventToMicroServicesQueueMap; // Each type of event has matching subscribers queue
 	private final ConcurrentHashMap<Class<? extends Broadcast>, ConcurrentLinkedQueue<MicroService>> broadcastToMicroServiceQueueMap; // Each type of broadcast has matching subscribers list
@@ -28,7 +26,7 @@ public class MessageBusImpl implements MessageBus {
 	}
 
 	private MessageBusImpl(){
-		eventToFutureMap = new HashMap<>();
+		eventToFutureMap = new ConcurrentHashMap<>();
 		microServiceToMsgQueueMap = new ConcurrentHashMap<>();
 		eventToMicroServicesQueueMap = new ConcurrentHashMap<>();
 		broadcastToMicroServiceQueueMap = new ConcurrentHashMap<>();
@@ -60,9 +58,9 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		if (broadcastToMicroServiceQueueMap.get(b.getClass()) != null) // there's micro-service subscribed to b type of broadcast
-			for (MicroService microService : broadcastToMicroServiceQueueMap.get(b.getClass())) // adding broadcast to each micro-service in the concurrent list
-				microServiceToMsgQueueMap.get(microService).add(b);
+		if (broadcastToMicroServiceQueueMap.get(b.getClass()) != null) // there's micro-service subscribed to b type of 
+            for (MicroService microService : broadcastToMicroServiceQueueMap.get(b.getClass())) // adding broadcast to each micro-service in the concurrent list
+                microServiceToMsgQueueMap.get(microService).add(b);
 	}
 
 	@Override

@@ -20,12 +20,12 @@ import java.util.*;
  */
 public class Main {
 	public static void main(String[] args) {
-		StarWarsParser starWarsParser = getStarWarsParser("input2.json");
+		StarWarsParser starWarsParser = getStarWarsParser(args[0]); 
 		initPassiveObjects(starWarsParser);
 		List<Thread> threadsList = prepareThreads(starWarsParser);
 		startAllTheThreads(threadsList);
 		completeThreads(threadsList);
-		gsonOutput("output.json");
+		gsonOutput(args[1]);
 	}
 
 	/**
@@ -56,11 +56,11 @@ public class Main {
 	 */
 	private static List<Thread> prepareThreads(StarWarsParser starWarsParser) {
 		List<Thread> threadsList = new ArrayList<>();
-		threadsList.add(new Thread(new LeiaMicroservice(starWarsParser.getAttacks(), starWarsParser.getR2D2(), starWarsParser.getLando())));
+		threadsList.add(new Thread(new LeiaMicroservice(starWarsParser.getAttacks())));
 		threadsList.add(new Thread(new C3POMicroservice()));
 		threadsList.add(new Thread(new HanSoloMicroservice()));
-		threadsList.add(new Thread(new R2D2Microservice()));
-		threadsList.add(new Thread(new LandoMicroservice()));
+		threadsList.add(new Thread(new R2D2Microservice(starWarsParser.getR2D2())));
+		threadsList.add(new Thread(new LandoMicroservice(starWarsParser.getLando())));
 		return threadsList;
 	}
 
