@@ -3,7 +3,7 @@ Java Generics, Concurrency, and Synchronization
 
 --------------
 
-To run use:
+# To run use:
 
 mvn compile
 
